@@ -1,4 +1,4 @@
-/* Motion Icons React - White Text with Blue Accents */
+/* Motion Icons React - Dual Theme Support */
 
 :root {
   --primary: #2563EB !important;
@@ -18,7 +18,8 @@ a[href*="mintlify"] {
   visibility: hidden !important;
 }
 
-/* Main text styling - WHITE TEXT */
+/* LIGHT THEME STYLES */
+/* Main text styling - DARK TEXT on light background */
 body,
 p,
 span,
@@ -28,28 +29,154 @@ h1, h2, h3, h4, h5, h6,
 .prose,
 [class*="text-"],
 .content {
-  color: white !important;
+  color: #1E293B !important;
+  background-color: white !important;
 }
 
-/* Site title styling */
+/* Site title styling - Light theme */
 .site-title,
 .navbar-brand,
 .logo-text {
   font-weight: 600 !important;
-  color: white !important;
+  color: #1E293B !important;
   font-size: 1.25rem !important;
 }
 
-/* Sidebar and navigation - WHITE TEXT */
+/* Sidebar and navigation - DARK TEXT */
 .sidebar,
 .nav-item,
 .nav-link,
 .navigation,
 .menu-item {
+  color: #475569 !important;
+}
+
+/* Links - DARK by default, BLUE on hover */
+a {
+  color: #475569 !important;
+  text-decoration: none !important;
+}
+
+a:hover {
+  color: #2563EB !important;
+}
+
+/* Code blocks - Light theme */
+.hljs,
+code,
+pre {
+  color: #1E293B !important;
+  background-color: #F1F5F9 !important;
+}
+
+/* Cards and containers - Light theme */
+.card,
+.container,
+.content-wrapper {
+  color: #1E293B !important;
+  background-color: white !important;
+}
+
+/* Footer - Light theme */
+.footer {
+  border-top: 1px solid #E2E8F0 !important;
+  background-color: #F8FAFC !important;
+  color: #475569 !important;
+}
+
+/* Light background for the entire site */
+body {
+  background-color: white !important;
+  color: #1E293B !important;
+}
+
+/* Ensure all containers have light background */
+.main,
+.content,
+.wrapper,
+.container {
+  background-color: white !important;
+  color: #1E293B !important;
+}
+
+/* DARK THEME STYLES */
+.dark body,
+.dark p,
+.dark span,
+.dark div,
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
+.dark .text-base,
+.dark .prose,
+.dark [class*="text-"],
+.dark .content {
+  color: white !important;
+  background-color: #0F172A !important;
+}
+
+/* Site title styling - Dark theme */
+.dark .site-title,
+.dark .navbar-brand,
+.dark .logo-text {
   color: white !important;
 }
 
-/* Hover states - BLUE */
+/* Sidebar and navigation - WHITE TEXT in dark mode */
+.dark .sidebar,
+.dark .nav-item,
+.dark .nav-link,
+.dark .navigation,
+.dark .menu-item {
+  color: white !important;
+}
+
+/* Links - WHITE by default, BLUE on hover in dark mode */
+.dark a {
+  color: white !important;
+}
+
+.dark a:hover {
+  color: #60A5FA !important;
+}
+
+/* Code blocks - Dark theme */
+.dark .hljs,
+.dark code,
+.dark pre {
+  color: white !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Cards and containers - Dark theme */
+.dark .card,
+.dark .container,
+.dark .content-wrapper {
+  color: white !important;
+  background-color: #0F172A !important;
+}
+
+/* Footer - Dark theme */
+.dark .footer {
+  border-top: 1px solid #334155 !important;
+  background-color: #1E293B !important;
+  color: white !important;
+}
+
+/* Dark background */
+.dark body {
+  background-color: #0F172A !important;
+  color: white !important;
+}
+
+.dark .main,
+.dark .content,
+.dark .wrapper,
+.dark .container {
+  background-color: #0F172A !important;
+  color: white !important;
+}
+
+/* SHARED INTERACTIVE ELEMENTS */
+/* Hover states - BLUE for both themes */
 .nav-item:hover,
 .nav-link:hover,
 .nav-item.active,
@@ -58,17 +185,7 @@ h1, h2, h3, h4, h5, h6,
   background-color: rgba(37, 99, 235, 0.1) !important;
 }
 
-/* Links - WHITE by default, BLUE on hover */
-a {
-  color: white !important;
-  text-decoration: none !important;
-}
-
-a:hover {
-  color: #2563EB !important;
-}
-
-/* Interactive elements - BLUE */
+/* Interactive elements - BLUE for both themes */
 .btn-primary,
 .cta-button,
 button[class*="primary"],
@@ -86,33 +203,19 @@ button[class*="primary"]:hover,
   border-color: #1E40AF !important;
 }
 
-/* Code blocks - WHITE text with BLUE keywords */
-.hljs,
-code,
-pre {
-  color: white !important;
-  background-color: rgba(0, 0, 0, 0.1) !important;
-}
-
+/* Code syntax highlighting - BLUE for both themes */
 .hljs-keyword,
 .hljs-built_in,
 .hljs-type {
   color: #2563EB !important;
 }
 
-/* Accent elements - BLUE backgrounds */
+/* Accent elements - BLUE backgrounds for both themes */
 .accent,
 .highlight,
 .badge-primary,
 .tag {
   background-color: #2563EB !important;
-  color: white !important;
-}
-
-/* Cards and containers - WHITE text */
-.card,
-.container,
-.content-wrapper {
   color: white !important;
 }
 
@@ -122,43 +225,34 @@ pre {
 .text-mint,
 [class*="mint"],
 [class*="green-"] {
-  color: white !important;
   background-color: transparent !important;
 }
 
-/* Override any remaining green elements */
+/* Light theme green override */
 [style*="green"],
 [style*="#16A34A"],
 [style*="#07C983"],
 [style*="#15803D"] {
+  color: #475569 !important;
+  background-color: transparent !important;
+}
+
+/* Dark theme green override */
+.dark [style*="green"],
+.dark [style*="#16A34A"],
+.dark [style*="#07C983"],
+.dark [style*="#15803D"] {
   color: white !important;
   background-color: transparent !important;
 }
 
-/* Footer customization */
-.footer {
-  border-top: 1px solid #334155 !important;
-  background-color: #1E293B !important;
-  color: white !important;
-}
-
-/* Dark background for the entire site */
-body {
-  background-color: #0F172A !important;
-  color: white !important;
-}
-
-/* Ensure all containers have dark background */
-.main,
-.content,
-.wrapper,
-.container {
-  background-color: #0F172A !important;
-  color: white !important;
-}
-
-/* Special elements that should remain visible */
+/* Border elements */
 .border,
 .divider {
+  border-color: #E2E8F0 !important;
+}
+
+.dark .border,
+.dark .divider {
   border-color: #334155 !important;
 }

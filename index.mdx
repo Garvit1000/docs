@@ -16,19 +16,30 @@ a[href*="mintlify"] {
   visibility: hidden !important;
 }
 
-/* White text theme */
+/* Light theme - dark text on white background */
 body, p, span, div, h1, h2, h3, h4, h5, h6 {
+  color: #1E293B !important;
+  background-color: white !important;
+}
+
+/* Dark theme - white text on dark background */
+.dark body, .dark p, .dark span, .dark div, 
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
   color: white !important;
   background-color: #0F172A !important;
 }
 
-/* Blue hover states */
+/* Blue hover states for both themes */
 a:hover {
   color: #2563EB !important;
 }
 
-/* Links default to white */
+/* Links - dark in light mode, white in dark mode */
 a {
+  color: #475569 !important;
+}
+
+.dark a {
   color: white !important;
 }
 `}
