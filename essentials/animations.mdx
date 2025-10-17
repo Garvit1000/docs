@@ -1,0 +1,278 @@
+---
+title: "Animation Types"
+description: "Explore all available animations and entrance effects"
+---
+
+Motion Icons React offers a rich collection of animations to bring your icons to life. All animations are smooth, performant, and respect accessibility preferences.
+
+## Main Animations
+
+These animations loop continuously while the component is mounted (unless configured otherwise).
+
+### Pulse
+A gentle pulsing effect that scales the icon slightly.
+
+```tsx
+<MotionIcon name="Heart" animation="pulse" />
+```
+
+**Best for:** Notifications, alerts, highlighting important elements
+
+### Spin
+Continuous 360-degree rotation.
+
+```tsx
+<MotionIcon name="Loader2" animation="spin" />
+```
+
+**Best for:** Loading indicators, refresh buttons, processing states
+
+### Bounce
+Vertical bouncing motion with elastic easing.
+
+```tsx
+<MotionIcon name="ArrowUp" animation="bounce" />
+```
+
+**Best for:** Call-to-action buttons, scroll indicators, playful interactions
+
+### Ping
+Radar-like expanding effect with opacity fade.
+
+```tsx
+<MotionIcon name="Wifi" animation="ping" />
+```
+
+**Best for:** Connection status, live indicators, real-time updates
+
+### Wiggle
+Side-to-side shaking motion.
+
+```tsx
+<MotionIcon name="Bell" animation="wiggle" />
+```
+
+**Best for:** Error states, attention-grabbing, notifications
+
+### Flip
+3D flip animation along the Y-axis.
+
+```tsx
+<MotionIcon name="RefreshCw" animation="flip" />
+```
+
+**Best for:** Toggle states, refresh actions, state changes
+
+### Heartbeat
+Double-pulse animation mimicking a heartbeat.
+
+```tsx
+<MotionIcon name="Heart" animation="heartbeat" />
+```
+
+**Best for:** Like buttons, health apps, emotional connections
+
+### Shake
+Horizontal shaking motion.
+
+```tsx
+<MotionIcon name="AlertTriangle" animation="shake" />
+```
+
+**Best for:** Error messages, warnings, invalid inputs
+
+### Swing
+Pendulum-like swinging motion.
+
+```tsx
+<MotionIcon name="Clock" animation="swing" />
+```
+
+**Best for:** Time-related icons, playful animations, waiting states
+
+### Tada
+Celebration animation with scale and rotation.
+
+```tsx
+<MotionIcon name="Trophy" animation="tada" />
+```
+
+**Best for:** Success messages, achievements, celebrations
+
+### Rubber
+Rubber band effect with elastic scaling.
+
+```tsx
+<MotionIcon name="Star" animation="rubber" />
+```
+
+**Best for:** Interactive elements, button feedback, playful interactions
+
+## Entrance Animations
+
+These animations play once when the component mounts, creating engaging entrance effects.
+
+### Fade Animations
+
+<Tabs>
+  <Tab title="Fade In">
+    ```tsx
+    <MotionIcon name="Star" entrance="fadeIn" />
+    ```
+    Simple opacity transition from 0 to 1.
+  </Tab>
+  
+  <Tab title="Fade In Up">
+    ```tsx
+    <MotionIcon name="ArrowUp" entrance="fadeInUp" />
+    ```
+    Fades in while moving up from below.
+  </Tab>
+  
+  <Tab title="Fade In Down">
+    ```tsx
+    <MotionIcon name="ArrowDown" entrance="fadeInDown" />
+    ```
+    Fades in while moving down from above.
+  </Tab>
+  
+  <Tab title="Fade In Left">
+    ```tsx
+    <MotionIcon name="ArrowLeft" entrance="fadeInLeft" />
+    ```
+    Fades in while moving from the left.
+  </Tab>
+  
+  <Tab title="Fade In Right">
+    ```tsx
+    <MotionIcon name="ArrowRight" entrance="fadeInRight" />
+    ```
+    Fades in while moving from the right.
+  </Tab>
+</Tabs>
+
+### Scale Animations
+
+```tsx
+<MotionIcon name="Plus" entrance="scaleIn" />
+```
+
+Scales up from 0 to full size with a smooth easing curve.
+
+### Slide Animations
+
+<Tabs>
+  <Tab title="Slide In Up">
+    ```tsx
+    <MotionIcon name="Upload" entrance="slideInUp" />
+    ```
+    Slides in from bottom without opacity change.
+  </Tab>
+  
+  <Tab title="Slide In Down">
+    ```tsx
+    <MotionIcon name="Download" entrance="slideInDown" />
+    ```
+    Slides in from top without opacity change.
+  </Tab>
+</Tabs>
+
+### Special Effects
+
+<Tabs>
+  <Tab title="Rotate In">
+    ```tsx
+    <MotionIcon name="RotateCw" entrance="rotateIn" />
+    ```
+    Rotates while fading in for a dynamic entrance.
+  </Tab>
+  
+  <Tab title="Zoom In">
+    ```tsx
+    <MotionIcon name="ZoomIn" entrance="zoomIn" />
+    ```
+    Combines scaling and fading for an impactful entrance.
+  </Tab>
+</Tabs>
+
+## Combining Animations
+
+You can combine entrance animations with main animations for rich effects:
+
+```tsx
+<MotionIcon
+  name="Heart"
+  entrance="zoomIn"
+  animation="heartbeat"
+  animationDuration={800}
+/>
+```
+
+## Animation Triggers
+
+Control when animations play using the `trigger` prop:
+
+<Tabs>
+  <Tab title="Always (Default)">
+    ```tsx
+    <MotionIcon name="Star" animation="pulse" trigger="always" />
+    ```
+    Animation plays continuously.
+  </Tab>
+  
+  <Tab title="Hover">
+    ```tsx
+    <MotionIcon name="Heart" animation="heartbeat" trigger="hover" />
+    ```
+    Animation plays only on hover.
+  </Tab>
+  
+  <Tab title="Click">
+    ```tsx
+    <MotionIcon name="Bell" animation="shake" trigger="click" />
+    ```
+    Animation plays on each click.
+  </Tab>
+  
+  <Tab title="Focus">
+    ```tsx
+    <MotionIcon name="Search" animation="pulse" trigger="focus" />
+    ```
+    Animation plays when focused (useful for interactive elements).
+  </Tab>
+</Tabs>
+
+## Customizing Animation Timing
+
+Fine-tune your animations with timing controls:
+
+```tsx
+<MotionIcon
+  name="Loader2"
+  animation="spin"
+  animationDuration={2000}  // 2 seconds per rotation
+  animationDelay={500}      // Wait 500ms before starting
+/>
+```
+
+## Performance Considerations
+
+All animations are optimized for performance:
+
+- **CSS-based:** Uses CSS transforms and opacity for smooth 60fps animations
+- **Hardware accelerated:** Leverages GPU acceleration when available
+- **Reduced motion:** Automatically respects `prefers-reduced-motion` setting
+- **Efficient:** Minimal impact on bundle size and runtime performance
+
+## Accessibility
+
+Motion Icons React is built with accessibility in mind:
+
+- Animations are disabled when `prefers-reduced-motion: reduce` is set
+- All animations maintain proper focus management
+- Screen readers announce icon changes appropriately
+- Keyboard navigation works seamlessly with animated icons
+
+<Note>
+  **Pro tip:** Use subtle animations like `pulse` for continuous effects and save dramatic animations like `tada` for special moments like success states.
+</Note>

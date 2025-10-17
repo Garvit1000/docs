@@ -1,33 +1,262 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "API Reference"
+description: "Complete API documentation for Motion Icons React"
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+Welcome to the Motion Icons React API reference. This section provides comprehensive documentation for all components, props, and utilities available in the library.
 
-## Welcome
+## Core Components
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+<CardGroup cols={2}>
+  <Card
+    title="MotionIcon"
+    icon="component"
+    href="/api-reference/motion-icon"
+  >
+    The main component for rendering animated Lucide icons
+  </Card>
+  
+  <Card
+    title="Props Reference"
+    icon="settings"
+    href="/api-reference/props"
+  >
+    Complete list of all available props and their types
+  </Card>
+</CardGroup>
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## Type Definitions
 
-## Authentication
+Motion Icons React is built with TypeScript and provides comprehensive type definitions.
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+### Animation Types
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+```typescript
+type AnimationType = 
+  | "none"
+  | "pulse" 
+  | "spin" 
+  | "bounce" 
+  | "ping" 
+  | "wiggle" 
+  | "flip" 
+  | "heartbeat" 
+  | "shake" 
+  | "swing" 
+  | "tada" 
+  | "rubber";
+
+type EntranceAnimationType = 
+  | "fadeIn"
+  | "fadeInUp"
+  | "fadeInDown" 
+  | "fadeInLeft"
+  | "fadeInRight"
+  | "scaleIn"
+  | "slideInUp"
+  | "slideInDown"
+  | "rotateIn"
+  | "zoomIn";
+
+type TriggerType = "always" | "hover" | "click" | "focus";
 ```
+
+### Component Props
+
+```typescript
+interface MotionIconProps {
+  // Required
+  name: string;
+  
+  // Appearance
+  size?: number;
+  color?: string;
+  weight?: "light" | "regular" | "bold";
+  className?: string;
+  
+  // Animation
+  animation?: AnimationType;
+  entrance?: EntranceAnimationType | null;
+  trigger?: TriggerType;
+  animationDuration?: number;
+  animationDelay?: number;
+  
+  // Interaction
+  interactive?: boolean;
+  onClick?: (event: MouseEvent) => void;
+  onMouseEnter?: (event: MouseEvent) => void;
+  onMouseLeave?: (event: MouseEvent) => void;
+  
+  // Accessibility
+  'aria-label'?: string;
+  'aria-hidden'?: boolean;
+  role?: string;
+  tabIndex?: number;
+}
+```
+
+## Usage Patterns
+
+### Basic Usage
+
+```typescript
+import { MotionIcon } from '@motion-icons/react';
+
+// Minimal usage
+<MotionIcon name="Heart" />
+
+// With animation
+<MotionIcon name="Heart" animation="pulse" />
+
+// Fully configured
+<MotionIcon
+  name="Heart"
+  animation="heartbeat"
+  entrance="zoomIn"
+  size={32}
+  color="red"
+  trigger="hover"
+  interactive
+  onClick={handleClick}
+/>
+```
+
+### Type Safety
+
+The library provides full type safety for all props:
+
+```typescript
+// TypeScript will validate icon names
+<MotionIcon name="Heart" />        // ✅ Valid
+<MotionIcon name="InvalidIcon" />  // ❌ Type error
+
+// Animation types are also validated
+<MotionIcon name="Star" animation="pulse" />    // ✅ Valid
+<MotionIcon name="Star" animation="invalid" />  // ❌ Type error
+```
+
+### Generic Component Pattern
+
+Create reusable components with proper typing:
+
+```typescript
+interface IconButtonProps {
+  icon: string;
+  label: string;
+  onClick: () => void;
+  variant?: 'primary' | 'secondary';
+}
+
+function IconButton({ icon, label, onClick, variant = 'primary' }: IconButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={`icon-button icon-button--${variant}`}
+    >
+      <MotionIcon
+        name={icon}
+        animation="bounce"
+        trigger="hover"
+        size={20}
+      />
+      {label}
+    </button>
+  );
+}
+```
+
+## Error Handling
+
+The library includes built-in error handling for common issues:
+
+### Invalid Icon Names
+
+```typescript
+// If an invalid icon name is provided, a fallback is shown
+<MotionIcon name="NonExistentIcon" />
+// Renders a default icon with a console warning
+```
+
+### Animation Conflicts
+
+```typescript
+// The library handles conflicting animations gracefully
+<MotionIcon 
+  name="Heart" 
+  animation="spin" 
+  entrance="rotateIn"  // Both involve rotation - handled automatically
+/>
+```
+
+## Performance Considerations
+
+### Bundle Size
+
+Motion Icons React is optimized for minimal bundle impact:
+
+- Tree-shaking support for unused animations
+- Lazy loading of animation definitions
+- Efficient CSS-in-JS implementation
+
+### Runtime Performance
+
+- Hardware-accelerated animations using CSS transforms
+- Minimal JavaScript execution during animations
+- Automatic cleanup of animation resources
+
+## Browser Compatibility
+
+The library supports all modern browsers with graceful degradation:
+
+```typescript
+// Feature detection is built-in
+const supportsAnimations = CSS.supports('animation', 'spin 1s linear infinite');
+
+// Animations automatically fall back in older browsers
+```
+
+## Migration Guide
+
+### From Lucide React
+
+Migrating from Lucide React is straightforward:
+
+```typescript
+// Before (Lucide React)
+import { Heart, Star, Settings } from 'lucide-react';
+
+<Heart size={24} color="red" />
+<Star size={20} />
+<Settings size={16} />
+
+// After (Motion Icons React)
+import { MotionIcon } from '@motion-icons/react';
+
+<MotionIcon name="Heart" size={24} color="red" animation="pulse" />
+<MotionIcon name="Star" size={20} animation="bounce" />
+<MotionIcon name="Settings" size={16} />
+```
+
+### Version Updates
+
+Check the [changelog](https://github.com/Garvit1000/motion-icons/releases) for breaking changes between versions.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="MotionIcon Component"
+    icon="component"
+    href="/api-reference/motion-icon"
+  >
+    Detailed documentation for the main component
+  </Card>
+  
+  <Card
+    title="Props Reference"
+    icon="list"
+    href="/api-reference/props"
+  >
+    Complete props documentation with examples
+  </Card>
+</CardGroup>

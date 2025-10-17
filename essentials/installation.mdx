@@ -1,0 +1,185 @@
+---
+title: "Installation"
+description: "Install and configure Motion Icons React in your project"
+---
+
+## Package Installation
+
+Motion Icons React requires both the main package and Lucide React as a peer dependency.
+
+### Using npm
+
+```bash
+npm install @motion-icons/react lucide-react
+```
+
+### Using yarn
+
+```bash
+yarn add @motion-icons/react lucide-react
+```
+
+### Using pnpm
+
+```bash
+pnpm add @motion-icons/react lucide-react
+```
+
+## CSS Import
+
+Import the required CSS file in your main application file:
+
+```tsx title="App.tsx"
+import '@motion-icons/react/style.css';
+import { MotionIcon } from '@motion-icons/react';
+
+function App() {
+  return (
+    <div>
+      <MotionIcon name="Heart" animation="pulse" />
+    </div>
+  );
+}
+```
+
+## Framework-Specific Setup
+
+### Next.js
+
+For Next.js applications, import the CSS in your `_app.tsx` or `layout.tsx`:
+
+```tsx title="pages/_app.tsx"
+import '@motion-icons/react/style.css';
+import type { AppProps } from 'next/app';
+
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
+}
+```
+
+### Vite
+
+For Vite projects, import in your main entry file:
+
+```tsx title="src/main.tsx"
+import '@motion-icons/react/style.css';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+```
+
+### Create React App
+
+Import in your `src/index.tsx`:
+
+```tsx title="src/index.tsx"
+import '@motion-icons/react/style.css';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+root.render(<App />);
+```
+
+## TypeScript Configuration
+
+Motion Icons React includes full TypeScript support out of the box. No additional configuration is needed.
+
+If you're using TypeScript, you'll get:
+- Full type safety for all props
+- IntelliSense for icon names
+- Autocomplete for animation types
+- Type checking for all component properties
+
+## Verification
+
+Test your installation with this simple component:
+
+```tsx
+import { MotionIcon } from '@motion-icons/react';
+
+function TestComponent() {
+  return (
+    <div>
+      <h1>Motion Icons React Test</h1>
+      <MotionIcon 
+        name="CheckCircle" 
+        animation="bounce" 
+        size={32} 
+        color="blue" 
+      />
+      <p>If you see a bouncing blue check mark, everything is working!</p>
+    </div>
+  );
+}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="CSS not loading">
+    **Problem:** Icons appear but animations don't work.
+    
+    **Solution:** Make sure you've imported the CSS file:
+    ```tsx
+    import '@motion-icons/react/style.css';
+    ```
+  </Accordion>
+
+  <Accordion title="Module not found error">
+    **Problem:** `Cannot resolve module '@motion-icons/react'`
+    
+    **Solution:** 
+    1. Ensure the package is installed: `npm list @motion-icons/react`
+    2. Try deleting `node_modules` and reinstalling: `rm -rf node_modules && npm install`
+    3. Check that you're importing from the correct package name
+  </Accordion>
+
+  <Accordion title="TypeScript errors">
+    **Problem:** TypeScript compilation errors
+    
+    **Solution:**
+    1. Ensure you have TypeScript 4.0 or higher
+    2. Check that both packages are properly installed
+    3. Restart your TypeScript language server
+  </Accordion>
+
+  <Accordion title="Icons not displaying">
+    **Problem:** Nothing appears where the icon should be
+    
+    **Solution:**
+    1. Verify the icon name exists in Lucide: [lucide.dev/icons](https://lucide.dev/icons/)
+    2. Check for console errors
+    3. Ensure the component is properly imported
+  </Accordion>
+</AccordionGroup>
+
+## Bundle Size
+
+Motion Icons React is designed to be lightweight:
+
+- **Core library:** ~15KB gzipped
+- **CSS animations:** ~8KB gzipped
+- **Total impact:** ~23KB gzipped
+
+The library uses tree-shaking to ensure you only bundle the code you actually use.
+
+## Browser Support
+
+Motion Icons React supports all modern browsers:
+
+- Chrome 60+
+- Firefox 55+
+- Safari 12+
+- Edge 79+
+
+<Note>
+  Animations automatically fall back gracefully in older browsers and respect the user's `prefers-reduced-motion` setting.
+</Note>

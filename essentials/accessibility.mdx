@@ -1,0 +1,335 @@
+---
+title: "Accessibility"
+description: "Learn about accessibility features and best practices"
+---
+
+Motion Icons React is built with accessibility as a core principle. The library automatically handles many accessibility concerns while providing you with tools to create inclusive experiences.
+
+## Automatic Motion Reduction
+
+The library automatically respects the user's motion preferences through the `prefers-reduced-motion` CSS media query.
+
+### How It Works
+
+When a user has enabled "Reduce motion" in their system settings:
+- All animations are automatically disabled
+- Icons still render normally but without motion effects
+- No additional code is required from you
+
+```css
+/* This is handled automatically by Motion Icons React */
+@media (prefers-reduced-motion: reduce) {
+  .motion-icon {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+```
+
+### Testing Motion Preferences
+
+You can test this behavior in your browser:
+
+<Tabs>
+  <Tab title="Chrome/Edge">
+    1. Open DevTools (F12)
+    2. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
+    3. Type "Rendering" and select "Show Rendering"
+    4. Find "Emulate CSS media feature prefers-reduced-motion"
+    5. Select "reduce"
+  </Tab>
+  
+  <Tab title="Firefox">
+    1. Open DevTools (F12)
+    2. Go to the "Settings" tab (gear icon)
+    3. Under "Advanced settings", check "Enable accessibility services"
+    4. Reload the page
+    5. In the Inspector, look for the accessibility panel
+  </Tab>
+  
+  <Tab title="System Settings">
+    **Windows:** Settings > Ease of Access > Display > Show animations
+    
+    **macOS:** System Preferences > Accessibility > Display > Reduce motion
+    
+    **Linux:** Varies by desktop environment
+  </Tab>
+</Tabs>
+
+## Screen Reader Support
+
+Motion Icons React maintains proper accessibility for screen readers.
+
+### Semantic HTML
+
+Icons are rendered with appropriate ARIA attributes:
+
+```tsx
+<MotionIcon 
+  name="Heart" 
+  animation="heartbeat"
+  // Automatically includes proper ARIA attributes
+/>
+```
+
+### Custom Labels
+
+Provide meaningful labels for screen readers:
+
+```tsx
+<MotionIcon
+  name="Loader2"
+  animation="spin"
+  aria-label="Loading content"
+  role="status"
+/>
+```
+
+### Decorative Icons
+
+Mark purely decorative icons to hide them from screen readers:
+
+```tsx
+<MotionIcon
+  name="Star"
+  animation="pulse"
+  aria-hidden="true"
+  decorative
+/>
+```
+
+## Focus Management
+
+Interactive icons maintain proper focus behavior.
+
+### Keyboard Navigation
+
+When using the `interactive` prop, icons become keyboard accessible:
+
+```tsx
+<MotionIcon
+  name="Heart"
+  animation="heartbeat"
+  trigger="focus"
+  interactive
+  tabIndex={0}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      // Handle activation
+    }
+  }}
+/>
+```
+
+### Focus Indicators
+
+Ensure interactive icons have visible focus indicators:
+
+```tsx
+<MotionIcon
+  name="Settings"
+  interactive
+  className="focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+/>
+```
+
+## Color and Contrast
+
+Ensure your animated icons meet accessibility standards.
+
+### Contrast Requirements
+
+Follow WCAG guidelines for color contrast:
+
+```tsx
+// Good: High contrast
+<MotionIcon
+  name="AlertTriangle"
+  animation="shake"
+  className="text-red-600"  // Ensure this meets 4.5:1 ratio
+/>
+
+// Better: Use semantic colors
+<MotionIcon
+  name="CheckCircle"
+  animation="bounce"
+  className="text-blue-700"  // Higher contrast than blue-500
+/>
+```
+
+### Color-Blind Friendly
+
+Don't rely solely on color to convey information:
+
+```tsx
+// Good: Uses both color and icon shape
+function StatusIcon({ status }) {
+  const config = {
+    success: { name: "CheckCircle", color: "text-blue-600", animation: "bounce" },
+    error: { name: "XCircle", color: "text-red-600", animation: "shake" },
+    warning: { name: "AlertTriangle", color: "text-yellow-600", animation: "wiggle" }
+  };
+  
+  const { name, color, animation } = config[status];
+  
+  return (
+    <MotionIcon
+      name={name}
+      animation={animation}
+      className={color}
+      aria-label={`Status: ${status}`}
+    />
+  );
+}
+```
+
+## Best Practices
+
+### Animation Duration
+
+Keep animations short and purposeful:
+
+```tsx
+// Good: Short, subtle animation
+<MotionIcon
+  name="Heart"
+  animation="pulse"
+  animationDuration={800}  // Less than 1 second
+/>
+
+// Avoid: Long, distracting animations
+<MotionIcon
+  name="Star"
+  animation="spin"
+  animationDuration={5000}  // Too long for most use cases
+/>
+```
+
+### Animation Frequency
+
+Limit the number of simultaneously animating elements:
+
+```tsx
+// Good: One primary animated element
+function LoadingCard() {
+  return (
+    <div className="card">
+      <MotionIcon name="Loader2" animation="spin" />
+      <p>Loading...</p>
+    </div>
+  );
+}
+
+// Avoid: Multiple competing animations
+function OverAnimatedCard() {
+  return (
+    <div className="card">
+      <MotionIcon name="Loader2" animation="spin" />
+      <MotionIcon name="Heart" animation="pulse" />
+      <MotionIcon name="Star" animation="bounce" />
+    </div>
+  );
+}
+```
+
+### Meaningful Animations
+
+Use animations that enhance understanding:
+
+```tsx
+// Good: Animation reinforces the action
+<button onClick={handleRefresh}>
+  <MotionIcon name="RefreshCw" animation="spin" trigger="click" />
+  Refresh
+</button>
+
+// Good: Animation indicates state
+<MotionIcon
+  name="Wifi"
+  animation={isConnected ? "ping" : "none"}
+  className={isConnected ? "text-blue-500" : "text-red-500"}
+/>
+```
+
+## Testing Accessibility
+
+### Automated Testing
+
+Use tools to test accessibility:
+
+```bash
+# Install accessibility testing tools
+npm install --save-dev @axe-core/react jest-axe
+
+# Example test
+import { axe, toHaveNoViolations } from 'jest-axe';
+
+test('MotionIcon should not have accessibility violations', async () => {
+  const { container } = render(
+    <MotionIcon name="Heart" animation="pulse" aria-label="Like button" />
+  );
+  
+  const results = await axe(container);
+  expect(results).toHaveNoViolations();
+});
+```
+
+### Manual Testing
+
+1. **Keyboard Navigation:** Tab through all interactive icons
+2. **Screen Reader:** Test with NVDA, JAWS, or VoiceOver
+3. **Motion Settings:** Test with reduced motion enabled
+4. **Color Blindness:** Use tools like Stark or Colorblinding
+5. **Zoom:** Test at 200% zoom level
+
+## ARIA Attributes Reference
+
+Common ARIA attributes for animated icons:
+
+| Attribute | Use Case | Example |
+|-----------|----------|---------|
+| `aria-label` | Descriptive label | `"Loading content"` |
+| `aria-hidden` | Decorative icons | `true` |
+| `role` | Semantic meaning | `"status"`, `"button"` |
+| `aria-live` | Dynamic content | `"polite"`, `"assertive"` |
+| `aria-busy` | Loading states | `true` |
+
+```tsx
+// Status indicator
+<MotionIcon
+  name="Loader2"
+  animation="spin"
+  role="status"
+  aria-label="Loading"
+  aria-live="polite"
+/>
+
+// Interactive button
+<MotionIcon
+  name="Heart"
+  animation="heartbeat"
+  trigger="hover"
+  role="button"
+  aria-label="Add to favorites"
+  tabIndex={0}
+/>
+
+// Decorative element
+<MotionIcon
+  name="Sparkles"
+  animation="pulse"
+  aria-hidden="true"
+  decorative
+/>
+```
+
+## Resources
+
+- [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/WCAG21/quickref/)
+- [MDN Accessibility Guide](https://developer.mozilla.org/en-US/docs/Web/Accessibility)
+- [A11y Project Checklist](https://www.a11yproject.com/checklist/)
+- [WebAIM Screen Reader Testing](https://webaim.org/articles/screenreader_testing/)
+
+<Note>
+  **Remember:** Accessibility is not just about compliance—it's about creating inclusive experiences that work for everyone.
+</Note>

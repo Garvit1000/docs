@@ -1,43 +1,61 @@
-# Mintlify Starter Kit
+# Motion Icons React Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+This repository contains the comprehensive documentation for Motion Icons React - the easiest way to add smooth animations to Lucide icons in React.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## 📚 Documentation Structure
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+The documentation includes:
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+- **Getting Started**: Installation and quick start guide  
+- **Essentials**: Animation types, examples, and accessibility
+- **API Reference**: Complete component and props documentation
 
-## Development
+## 🚀 Features Covered
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+- Installation and setup instructions
+- 10+ animation types and entrance effects
+- Real-world examples and use cases
+- Accessibility best practices and guidelines
+- Complete API reference with TypeScript support
 
-```
+**[View the live documentation](https://motion-icons.dev)**
+
+## 👩‍💻 Development
+
+Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally:
+
+```bash
 npm i -g mint
 ```
 
 Run the following command at the root of your documentation, where your `docs.json` is located:
 
-```
+```bash
 mint dev
 ```
 
 View your local preview at `http://localhost:3000`.
 
-## Publishing changes
+## 🔗 Links
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+- [Motion Icons React Package](https://www.npmjs.com/package/@motion-icons/react)
+- [GitHub Repository](https://github.com/Garvit1000/motion-icons)
+- [Live Demo](https://motion-icons.dev)
+- [Documentation Site](https://motion-icons.dev)
 
-## Need help?
+## 📝 Contributing
+
+Contributions to improve the documentation are welcome! Please feel free to:
+
+- Report issues or suggest improvements
+- Submit pull requests for documentation updates
+- Share feedback on clarity and completeness
 
 ### Troubleshooting
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI
+- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`
 
 ### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+- [Motion Icons React GitHub](https://github.com/Garvit1000/motion-icons)
+- [NPM Package](https://www.npmjs.com/package/@motion-icons/react)

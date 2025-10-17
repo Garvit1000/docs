@@ -1,0 +1,397 @@
+---
+title: "Examples"
+description: "Real-world examples and common use cases for Motion Icons React"
+---
+
+Explore practical examples of how to use Motion Icons React in your applications.
+
+## Loading States
+
+### Basic Loading Spinner
+
+```tsx
+import { MotionIcon } from '@motion-icons/react';
+
+function LoadingSpinner() {
+  return (
+    <div className="flex items-center gap-2">
+      <MotionIcon
+        name="Loader2"
+        animation="spin"
+        size={20}
+        className="text-blue-500"
+      />
+      <span>Loading...</span>
+    </div>
+  );
+}
+```
+
+### Button with Loading State
+
+```tsx
+import { useState } from 'react';
+import { MotionIcon } from '@motion-icons/react';
+
+function SubmitButton() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setIsLoading(false);
+  };
+
+  return (
+    <button
+      onClick={handleSubmit}
+      disabled={isLoading}
+      className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded"
+    >
+      {isLoading ? (
+        <MotionIcon name="Loader2" animation="spin" size={16} />
+      ) : (
+        <MotionIcon name="Send" size={16} />
+      )}
+      {isLoading ? 'Submitting...' : 'Submit'}
+    </button>
+  );
+}
+```
+
+## Interactive Elements
+
+### Like Button with Animation
+
+```tsx
+import { useState } from 'react';
+import { MotionIcon } from '@motion-icons/react';
+
+function LikeButton() {
+  const [isLiked, setIsLiked] = useState(false);
+
+  return (
+    <button
+      onClick={() => setIsLiked(!isLiked)}
+      className={`p-2 rounded-full transition-colors ${
+        isLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-400'
+      }`}
+    >
+      <MotionIcon
+        name={isLiked ? "Heart" : "Heart"}
+        animation={isLiked ? "heartbeat" : "none"}
+        trigger="always"
+        size={24}
+        className={isLiked ? "fill-current" : ""}
+      />
+    </button>
+  );
+}
+```
+
+### Hover Effects
+
+```tsx
+function NavigationItem({ icon, label, href }) {
+  return (
+    <a
+      href={href}
+      className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors"
+    >
+      <MotionIcon
+        name={icon}
+        animation="bounce"
+        trigger="hover"
+        size={20}
+        className="text-blue-500"
+      />
+      <span>{label}</span>
+    </a>
+  );
+}
+
+// Usage
+<NavigationItem icon="Home" label="Dashboard" href="/dashboard" />
+<NavigationItem icon="Users" label="Users" href="/users" />
+<NavigationItem icon="Settings" label="Settings" href="/settings" />
+```
+
+## Notifications and Alerts
+
+### Notification Badge
+
+```tsx
+function NotificationBell({ hasNotifications = false }) {
+  return (
+    <div className="relative">
+      <MotionIcon
+        name="Bell"
+        animation={hasNotifications ? "wiggle" : "none"}
+        trigger="always"
+        size={24}
+        className="text-gray-600"
+      />
+      {hasNotifications && (
+        <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full">
+          <MotionIcon
+            name="Circle"
+            animation="ping"
+            size={12}
+            className="text-red-500"
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+### Success Message
+
+```tsx
+function SuccessMessage({ message }) {
+  return (
+    <div className="flex items-center gap-3 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+      <MotionIcon
+        name="CheckCircle"
+        entrance="zoomIn"
+        animation="tada"
+        size={24}
+        className="text-blue-500"
+      />
+      <span className="text-blue-800">{message}</span>
+    </div>
+  );
+}
+```
+
+### Error Alert
+
+```tsx
+function ErrorAlert({ message }) {
+  return (
+    <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+      <MotionIcon
+        name="AlertTriangle"
+        animation="shake"
+        trigger="always"
+        size={24}
+        className="text-red-500"
+      />
+      <span className="text-red-800">{message}</span>
+    </div>
+  );
+}
+```
+
+## Form Elements
+
+### Search Input with Animation
+
+```tsx
+import { useState } from 'react';
+
+function SearchInput() {
+  const [isSearching, setIsSearching] = useState(false);
+  const [query, setQuery] = useState('');
+
+  const handleSearch = async (value) => {
+    setQuery(value);
+    if (value.length > 2) {
+      setIsSearching(true);
+      // Simulate search
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setIsSearching(false);
+    }
+  };
+
+  return (
+    <div className="relative">
+      <input
+        type="text"
+        placeholder="Search..."
+        value={query}
+        onChange={(e) => handleSearch(e.target.value)}
+        className="pl-10 pr-4 py-2 border rounded-lg w-full"
+      />
+      <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+        <MotionIcon
+          name={isSearching ? "Loader2" : "Search"}
+          animation={isSearching ? "spin" : "none"}
+          size={16}
+          className="text-gray-400"
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+### Toggle Switch
+
+```tsx
+import { useState } from 'react';
+
+function ToggleSwitch({ label, defaultChecked = false }) {
+  const [isChecked, setIsChecked] = useState(defaultChecked);
+
+  return (
+    <label className="flex items-center gap-3 cursor-pointer">
+      <div className="relative">
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={(e) => setIsChecked(e.target.checked)}
+          className="sr-only"
+        />
+        <div className={`w-12 h-6 rounded-full transition-colors ${
+          isChecked ? 'bg-blue-500' : 'bg-gray-300'
+        }`}>
+          <div className={`w-5 h-5 bg-white rounded-full shadow transform transition-transform ${
+            isChecked ? 'translate-x-6' : 'translate-x-0.5'
+          } mt-0.5`}>
+            <MotionIcon
+              name={isChecked ? "Check" : "X"}
+              animation="flip"
+              trigger="always"
+              size={12}
+              className={`mt-0.5 ml-0.5 ${isChecked ? 'text-blue-500' : 'text-gray-400'}`}
+            />
+          </div>
+        </div>
+      </div>
+      <span>{label}</span>
+    </label>
+  );
+}
+```
+
+## Status Indicators
+
+### Connection Status
+
+```tsx
+function ConnectionStatus({ isConnected }) {
+  return (
+    <div className="flex items-center gap-2">
+      <MotionIcon
+        name="Wifi"
+        animation={isConnected ? "ping" : "none"}
+        size={16}
+        className={isConnected ? "text-blue-500" : "text-red-500"}
+      />
+      <span className={isConnected ? "text-blue-700" : "text-red-700"}>
+        {isConnected ? "Connected" : "Disconnected"}
+      </span>
+    </div>
+  );
+}
+```
+
+### Live Indicator
+
+```tsx
+function LiveIndicator() {
+  return (
+    <div className="flex items-center gap-2">
+      <MotionIcon
+        name="Circle"
+        animation="pulse"
+        size={8}
+        className="text-red-500 fill-current"
+      />
+      <span className="text-sm font-medium text-red-600">LIVE</span>
+    </div>
+  );
+}
+```
+
+## Navigation and Menus
+
+### Animated Menu Toggle
+
+```tsx
+import { useState } from 'react';
+
+function MobileMenu() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="p-2 rounded-lg hover:bg-gray-100"
+      >
+        <MotionIcon
+          name={isOpen ? "X" : "Menu"}
+          animation="flip"
+          trigger="always"
+          size={24}
+        />
+      </button>
+      
+      {isOpen && (
+        <div className="mt-2 p-4 bg-white border rounded-lg shadow-lg">
+          <nav className="space-y-2">
+            <a href="#" className="block p-2 hover:bg-gray-50 rounded">
+              <MotionIcon name="Home" entrance="fadeInLeft" size={16} className="inline mr-2" />
+              Home
+            </a>
+            <a href="#" className="block p-2 hover:bg-gray-50 rounded">
+              <MotionIcon name="User" entrance="fadeInLeft" size={16} className="inline mr-2" />
+              Profile
+            </a>
+            <a href="#" className="block p-2 hover:bg-gray-50 rounded">
+              <MotionIcon name="Settings" entrance="fadeInLeft" size={16} className="inline mr-2" />
+              Settings
+            </a>
+          </nav>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Data Visualization
+
+### Progress Indicator
+
+```tsx
+function ProgressStep({ step, currentStep, label }) {
+  const isActive = step === currentStep;
+  const isCompleted = step < currentStep;
+
+  return (
+    <div className="flex items-center gap-2">
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+        isCompleted ? 'bg-blue-500' : isActive ? 'bg-blue-600' : 'bg-gray-300'
+      }`}>
+        {isCompleted ? (
+          <MotionIcon
+            name="Check"
+            entrance="zoomIn"
+            size={16}
+            className="text-white"
+          />
+        ) : (
+          <MotionIcon
+            name="Circle"
+            animation={isActive ? "pulse" : "none"}
+            size={16}
+            className="text-white fill-current"
+          />
+        )}
+      </div>
+      <span className={isActive ? "font-medium" : ""}>{label}</span>
+    </div>
+  );
+}
+```
+
+These examples demonstrate the versatility of Motion Icons React across different UI patterns. Each example can be customized further with different animations, colors, and styling to match your application's design system.
+
+<Tip>
+  **Remember:** Always consider the user experience when adding animations. Subtle animations often work better than dramatic ones for everyday interactions.
+</Tip>

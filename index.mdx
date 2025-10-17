@@ -1,97 +1,183 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Motion Icons React"
+description: "The easiest way to add smooth animations to Lucide icons in React"
 ---
 
-## Setting up
+<style>
+{`
+/* Hide Mintlify branding */
+[class*="powered"],
+[class*="mintlify"],
+.footer-branding,
+.powered-by,
+a[href*="mintlify.com"],
+a[href*="mintlify"] {
+  display: none !important;
+  visibility: hidden !important;
+}
 
-Get your documentation site up and running in minutes.
+/* White text theme */
+body, p, span, div, h1, h2, h3, h4, h5, h6 {
+  color: white !important;
+  background-color: #0F172A !important;
+}
+
+/* Blue hover states */
+a:hover {
+  color: #2563EB !important;
+}
+
+/* Links default to white */
+a {
+  color: white !important;
+}
+`}
+</style>
+
+**Motion Icons React** is a powerful library that brings your Lucide React icons to life with smooth, customizable animations. It's designed to be a drop-in replacement for Lucide React icons with zero configuration required.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Easy to Use" icon="zap">
+    Drop-in replacement for Lucide React icons with zero configuration
+  </Card>
+  <Card title="Rich Animations" icon="sparkles">
+    10+ built-in animations including spin, bounce, wiggle, and more
+  </Card>
+  <Card title="Entrance Effects" icon="eye">
+    Eye-catching entrance animations to grab user attention
+  </Card>
+  <Card title="Accessible" icon="universal-access">
+    Automatically respects `prefers-reduced-motion` settings
+  </Card>
+  <Card title="Lightweight" icon="feather">
+    Minimal bundle size impact on your application
+  </Card>
+  <Card title="TypeScript Ready" icon="code">
+    Full type safety and IntelliSense support included
+  </Card>
+</CardGroup>
+
+## Quick Example
+
+Here's how simple it is to add animations to your icons:
+
+```tsx
+import { MotionIcon } from '@motion-icons/react';
+import '@motion-icons/react/style.css';
+
+function App() {
+  return (
+    <MotionIcon
+      name="Heart"
+      animation="heartbeat"
+      size={32}
+      color="red"
+    />
+  );
+}
+```
+
+## Get Started
+
+Ready to animate your icons? Follow our step-by-step guide:
 
 <Card
-  title="Start here"
+  title="Quick Start Guide"
   icon="rocket"
   href="/quickstart"
   horizontal
 >
-  Follow our three step quickstart guide.
+  Install and set up Motion Icons React in under 2 minutes
 </Card>
 
-## Make it yours
+## Explore the Documentation
 
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
+<CardGroup cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="Installation"
+    icon="download"
+    href="/essentials/installation"
   >
-    Edit your docs locally and preview them in real time.
+    Install the package and set up your first animated icon
   </Card>
   <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
+    title="Animation Types"
+    icon="play"
+    href="/essentials/animations"
   >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+    Explore all available animations and entrance effects
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
+    title="Props & API"
+    icon="settings"
+    href="/api-reference/props"
   >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
-
-## Create beautiful pages
-
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
+    Complete reference for all component props and options
   </Card>
   <Card
-    title="Code samples"
+    title="Examples"
     icon="code"
-    href="/essentials/code"
+    href="/essentials/examples"
   >
-    Add sample code to demonstrate how to use your product.
+    Real-world examples and common use cases
+  </Card>
+</CardGroup>
+
+## Popular Use Cases
+
+<Accordion title="Loading Spinners">
+```tsx
+<MotionIcon
+  name="Loader2"
+  animation="spin"
+  size={20}
+  className="text-gray-500"
+/>
+```
+</Accordion>
+
+<Accordion title="Interactive Buttons">
+```tsx
+<MotionIcon
+  name="Heart"
+  animation="heartbeat"
+  trigger="hover"
+  interactive
+  size={24}
+  onClick={() => console.log('Liked!')}
+/>
+```
+</Accordion>
+
+<Accordion title="Notification Icons">
+```tsx
+<MotionIcon
+  name="Bell"
+  animation="shake"
+  trigger="click"
+  entrance="fadeInUp"
+  size={24}
+/>
+```
+</Accordion>
+
+## Community & Support
+
+<CardGroup cols={2}>
+  <Card
+    title="GitHub Issues"
+    icon="github"
+    href="https://github.com/Garvit1000/motion-icons/issues"
+  >
+    Report bugs or request new features
   </Card>
   <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
+    title="Discussions"
+    icon="comments"
+    href="https://github.com/Garvit1000/motion-icons/discussions"
   >
-    Display images and other media.
+    Ask questions and share ideas with the community
   </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
-
-## Need inspiration?
-
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+</CardGroup>

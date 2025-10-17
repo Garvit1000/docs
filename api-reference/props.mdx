@@ -1,0 +1,338 @@
+---
+title: "Props Reference"
+description: "Complete reference for all MotionIcon component props"
+---
+
+This page provides a comprehensive reference for all props available on the `MotionIcon` component.
+
+## Required Props
+
+### name
+
+<ParamField path="name" type="string" required>
+  The name of the Lucide icon to render. Must match exactly with a Lucide icon name.
+</ParamField>
+
+```tsx
+<MotionIcon name="Heart" />
+<MotionIcon name="Star" />
+<MotionIcon name="Settings" />
+```
+
+<Note>
+  Icon names are case-sensitive and must match the exact Lucide icon names. Check the [Lucide icon library](https://lucide.dev/icons/) for available icons.
+</Note>
+
+## Appearance Props
+
+### size
+
+<ParamField path="size" type="number" default="24">
+  The size of the icon in pixels. Applied to both width and height.
+</ParamField>
+
+```tsx
+<MotionIcon name="Heart" size={16} />  {/* Small */}
+<MotionIcon name="Heart" size={24} />  {/* Default */}
+<MotionIcon name="Heart" size={32} />  {/* Large */}
+<MotionIcon name="Heart" size={48} />  {/* Extra large */}
+```
+
+### color
+
+<ParamField path="color" type="string" default="currentColor">
+  The color of the icon. Accepts any valid CSS color value.
+</ParamField>
+
+```tsx
+<MotionIcon name="Heart" color="red" />
+<MotionIcon name="Heart" color="#ff0000" />
+<MotionIcon name="Heart" color="rgb(255, 0, 0)" />
+<MotionIcon name="Heart" color="hsl(0, 100%, 50%)" />
+```
+
+### weight
+
+<ParamField path="weight" type="'light' | 'regular' | 'bold'" default="regular">
+  The stroke weight of the icon.
+</ParamField>
+
+```tsx
+<MotionIcon name="Heart" weight="light" />
+<MotionIcon name="Heart" weight="regular" />
+<MotionIcon name="Heart" weight="bold" />
+```
+
+### className
+
+<ParamField path="className" type="string" default="">
+  Additional CSS classes to apply to the icon element.
+</ParamField>
+
+```tsx
+<MotionIcon 
+  name="Heart" 
+  className="text-red-500 hover:text-red-600" 
+/>
+```
+
+## Animation Props
+
+### animation
+
+<ParamField path="animation" type="AnimationType" default="none">
+  The main animation to apply to the icon.
+</ParamField>
+
+Available animation types:
+- `"none"` - No animation
+- `"pulse"` - Gentle pulsing effect
+- `"spin"` - Continuous rotation
+- `"bounce"` - Bouncing motion
+- `"ping"` - Radar-like ping effect
+- `"wiggle"` - Side-to-side wiggle
+- `"flip"` - 3D flip animation
+- `"heartbeat"` - Heart-like beating
+- `"shake"` - Shake effect
+- `"swing"` - Pendulum swing
+- `"tada"` - Celebration animation
+- `"rubber"` - Rubber band effect
+
+```tsx
+<MotionIcon name="Heart" animation="pulse" />
+<MotionIcon name="Loader2" animation="spin" />
+<MotionIcon name="Bell" animation="wiggle" />
+```
+
+### entrance
+
+<ParamField path="entrance" type="EntranceAnimationType | null" default="null">
+  The entrance animation to play when the component mounts.
+</ParamField>
+
+Available entrance animations:
+- `"fadeIn"` - Fade in from transparent
+- `"fadeInUp"` - Fade in from bottom
+- `"fadeInDown"` - Fade in from top
+- `"fadeInLeft"` - Fade in from left
+- `"fadeInRight"` - Fade in from right
+- `"scaleIn"` - Scale up from center
+- `"slideInUp"` - Slide in from bottom
+- `"slideInDown"` - Slide in from top
+- `"rotateIn"` - Rotate while fading in
+- `"zoomIn"` - Zoom in with scale
+
+```tsx
+<MotionIcon name="Star" entrance="zoomIn" />
+<MotionIcon name="ArrowUp" entrance="fadeInUp" />
+<MotionIcon name="Heart" entrance="scaleIn" animation="pulse" />
+```
+
+### trigger
+
+<ParamField path="trigger" type="'always' | 'hover' | 'click' | 'focus'" default="always">
+  When the main animation should be triggered.
+</ParamField>
+
+```tsx
+<MotionIcon name="Heart" animation="pulse" trigger="always" />
+<MotionIcon name="Heart" animation="heartbeat" trigger="hover" />
+<MotionIcon name="Bell" animation="shake" trigger="click" />
+<MotionIcon name="Search" animation="pulse" trigger="focus" />
+```
+
+### animationDuration
+
+<ParamField path="animationDuration" type="number" default="1000">
+  The duration of the animation in milliseconds.
+</ParamField>
+
+```tsx
+<MotionIcon name="Heart" animation="pulse" animationDuration={500} />   {/* Fast */}
+<MotionIcon name="Heart" animation="pulse" animationDuration={2000} />  {/* Slow */}
+```
+
+### animationDelay
+
+<ParamField path="animationDelay" type="number" default="0">
+  The delay before the animation starts in milliseconds.
+</ParamField>
+
+```tsx
+<MotionIcon name="Star" animation="bounce" animationDelay={200} />
+<MotionIcon name="Heart" entrance="fadeIn" animationDelay={500} />
+```
+
+## Interaction Props
+
+### interactive
+
+<ParamField path="interactive" type="boolean" default="false">
+  Whether the icon should be interactive (focusable and respond to keyboard events).
+</ParamField>
+
+```tsx
+<MotionIcon 
+  name="Heart" 
+  interactive 
+  animation="heartbeat" 
+  trigger="hover" 
+/>
+```
+
+### onClick
+
+<ParamField path="onClick" type="(event: MouseEvent) => void">
+  Click event handler for the icon.
+</ParamField>
+
+```tsx
+<MotionIcon 
+  name="Heart" 
+  onClick={() => console.log('Icon clicked!')} 
+/>
+```
+
+### onMouseEnter
+
+<ParamField path="onMouseEnter" type="(event: MouseEvent) => void">
+  Mouse enter event handler for the icon.
+</ParamField>
+
+```tsx
+<MotionIcon 
+  name="Heart" 
+  onMouseEnter={() => console.log('Mouse entered!')} 
+/>
+```
+
+### onMouseLeave
+
+<ParamField path="onMouseLeave" type="(event: MouseEvent) => void">
+  Mouse leave event handler for the icon.
+</ParamField>
+
+```tsx
+<MotionIcon 
+  name="Heart" 
+  onMouseLeave={() => console.log('Mouse left!')} 
+/>
+```
+
+## Accessibility Props
+
+### aria-label
+
+<ParamField path="aria-label" type="string">
+  Accessible label for screen readers.
+</ParamField>
+
+```tsx
+<MotionIcon 
+  name="Heart" 
+  aria-label="Add to favorites" 
+/>
+```
+
+### aria-hidden
+
+<ParamField path="aria-hidden" type="boolean">
+  Whether the icon should be hidden from screen readers.
+</ParamField>
+
+```tsx
+<MotionIcon 
+  name="Star" 
+  aria-hidden={true}  // Decorative icon
+/>
+```
+
+### role
+
+<ParamField path="role" type="string">
+  ARIA role for the icon element.
+</ParamField>
+
+```tsx
+<MotionIcon 
+  name="Loader2" 
+  animation="spin" 
+  role="status" 
+  aria-label="Loading"
+/>
+```
+
+### tabIndex
+
+<ParamField path="tabIndex" type="number">
+  Tab index for keyboard navigation.
+</ParamField>
+
+```tsx
+<MotionIcon 
+  name="Settings" 
+  interactive 
+  tabIndex={0} 
+/>
+```
+
+## Complete Example
+
+Here's an example using multiple props together:
+
+```tsx
+<MotionIcon
+  name="Heart"
+  size={32}
+  color="red"
+  weight="bold"
+  animation="heartbeat"
+  entrance="zoomIn"
+  trigger="hover"
+  animationDuration={800}
+  animationDelay={200}
+  interactive
+  className="cursor-pointer hover:scale-110 transition-transform"
+  onClick={handleLike}
+  onMouseEnter={handleMouseEnter}
+  aria-label="Add to favorites"
+  role="button"
+  tabIndex={0}
+/>
+```
+
+## TypeScript Support
+
+All props are fully typed for TypeScript users:
+
+```typescript
+import { MotionIcon, type MotionIconProps } from '@motion-icons/react';
+
+// Props are fully typed
+const iconProps: MotionIconProps = {
+  name: "Heart",           // ✅ Valid icon name
+  animation: "pulse",      // ✅ Valid animation
+  size: 24,               // ✅ Number
+  color: "red",           // ✅ String
+  // name: "InvalidIcon"   // ❌ TypeScript error
+};
+
+function MyIcon(props: MotionIconProps) {
+  return <MotionIcon {...props} />;
+}
+```
+
+## Default Values Summary
+
+| Prop | Default Value |
+|------|---------------|
+| `size` | `24` |
+| `color` | `"currentColor"` |
+| `weight` | `"regular"` |
+| `animation` | `"none"` |
+| `entrance` | `null` |
+| `trigger` | `"always"` |
+| `interactive` | `false` |
+| `animationDuration` | `1000` |
+| `animationDelay` | `0` |
+| `className` | `""` |
