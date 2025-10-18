@@ -22,11 +22,11 @@ body, p, span, div, h1, h2, h3, h4, h5, h6 {
   background-color: white !important;
 }
 
-/* Dark theme - white text on dark background */
+/* Dark theme - white text on black background */
 .dark body, .dark p, .dark span, .dark div, 
 .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
   color: white !important;
-  background-color: #0F172A !important;
+  background-color: #000000 !important;
 }
 
 /* Blue hover states for both themes */
@@ -42,14 +42,24 @@ a {
 .dark a {
   color: white !important;
 }
+
 `}
 </style>
 
 ## Installation
 
-Get started with Motion Icons React in just a few simple steps.
+This guide will walk you through installing and using Motion Icons React in your project. The entire setup takes less than 2 minutes.
+
+### Prerequisites
+
+Before you begin, make sure you have:
+- Node.js 14 or higher installed
+- A React project (16.8+ for hooks support)
+- Basic familiarity with React components
 
 ### Step 1: Install the Package
+
+Install both Motion Icons React and Lucide React using your preferred package manager:
 
 <CodeGroup>
 ```bash npm
@@ -63,15 +73,24 @@ yarn add @motion-icons/react lucide-react
 ```bash pnpm
 pnpm add @motion-icons/react lucide-react
 ```
+
+```bash bun
+bun add @motion-icons/react lucide-react
+```
 </CodeGroup>
 
 <Note>
-  **Why lucide-react?** Motion Icons React is built on top of Lucide React icons, so you'll need both packages.
+  **Why lucide-react?** Motion Icons React is built on top of Lucide React icons, so you'll need both packages. Lucide provides the icon shapes, while Motion Icons adds the animation layer.
 </Note>
 
 ### Step 2: Import the Styles
 
-Add the CSS import to your main application file (usually `App.tsx` or `index.tsx`):
+The animations require CSS to work. Import the stylesheet in your main application file:
+
+**Where to add this:**
+- Create React App: `src/index.tsx` or `src/App.tsx`
+- Next.js: `pages/_app.tsx` or `app/layout.tsx`
+- Vite: `src/main.tsx`
 
 ```tsx
 import '@motion-icons/react/style.css';
@@ -79,7 +98,7 @@ import '@motion-icons/react/style.css';
 
 ### Step 3: Use Your First Animated Icon
 
-Replace any Lucide React icon with a MotionIcon component:
+Now you're ready to use animated icons! Here's how to convert a regular Lucide icon to an animated one:
 
 <CodeGroup>
 ```tsx Before (Lucide React)
@@ -106,11 +125,16 @@ function LikeButton() {
 ```
 </CodeGroup>
 
+**What changed?**
+1. Import `MotionIcon` instead of individual icon components
+2. Use the `name` prop to specify which icon (e.g., "Heart", "Star", "Bell")
+3. Add the `animation` prop to choose an animation type
+
 That's it! Your icon now has a smooth heartbeat animation.
 
 ## Try Different Animations
 
-Experiment with different animation types:
+Motion Icons React includes 10+ built-in animations. Here are some popular ones:
 
 <Tabs>
   <Tab title="Spin Animation">
@@ -149,32 +173,42 @@ Experiment with different animation types:
 
 ## Add Entrance Effects
 
-Make your icons appear with style using entrance animations:
+Entrance animations play once when the icon first appears on screen. You can combine them with regular animations:
 
 ```tsx
 <MotionIcon
   name="Star"
-  entrance="zoomIn"
-  animation="pulse"
+  entrance="zoomIn"      // Plays once on mount
+  animation="pulse"      // Loops continuously
   size={32}
   color="#FFD700"
 />
 ```
 
+**How it works:**
+1. Icon zooms in when it first appears (entrance)
+2. Then continues pulsing indefinitely (animation)
+
 ## Make Icons Interactive
 
-Add hover and click interactions:
+Control when animations play using the `trigger` prop:
 
 ```tsx
 <MotionIcon
   name="Heart"
   animation="heartbeat"
-  trigger="hover"
-  interactive
+  trigger="hover"        // Animation only plays on hover
+  interactive           // Makes icon focusable and clickable
   size={24}
   onClick={() => console.log('Icon clicked!')}
 />
 ```
+
+**Trigger options:**
+- `"always"` (default): Animation plays continuously
+- `"hover"`: Animation plays only when hovering
+- `"click"`: Animation plays on each click
+- `"focus"`: Animation plays when focused (keyboard navigation)
 
 ## Next Steps
 

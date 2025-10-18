@@ -22,11 +22,11 @@ body, p, span, div, h1, h2, h3, h4, h5, h6 {
   background-color: white !important;
 }
 
-/* Dark theme - white text on dark background */
+/* Dark theme - white text on black background */
 .dark body, .dark p, .dark span, .dark div, 
 .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
   color: white !important;
-  background-color: #0F172A !important;
+  background-color: #000000 !important;
 }
 
 /* Blue hover states for both themes */
@@ -45,7 +45,16 @@ a {
 `}
 </style>
 
-**Motion Icons React** is a powerful library that brings your Lucide React icons to life with smooth, customizable animations. It's designed to be a drop-in replacement for Lucide React icons with zero configuration required.
+**Motion Icons React** is a React library that adds smooth, customizable animations to Lucide icons. Think of it as Lucide React with superpowers - you get all the icons you love, plus built-in animations like spin, bounce, pulse, and more.
+
+### Why Use Motion Icons React?
+
+Instead of writing custom CSS animations for every icon, Motion Icons React gives you:
+- **Pre-built animations**: 10+ ready-to-use animation types
+- **Zero configuration**: Works out of the box with sensible defaults
+- **Full control**: Customize timing, triggers, and behavior
+- **TypeScript support**: Complete type safety and autocomplete
+- **Accessibility first**: Respects user motion preferences automatically
 
 ## Key Features
 
@@ -72,23 +81,37 @@ a {
 
 ## Quick Example
 
-Here's how simple it is to add animations to your icons:
+Here's a simple comparison showing how easy it is to add animations:
 
-```tsx
+<CodeGroup>
+```tsx Without Motion Icons (Plain Lucide)
+import { Heart } from 'lucide-react';
+
+function LikeButton() {
+  return <Heart size={24} color="red" />;
+}
+// Result: Static heart icon
+```
+
+```tsx With Motion Icons (Animated)
 import { MotionIcon } from '@motion-icons/react';
 import '@motion-icons/react/style.css';
 
-function App() {
+function LikeButton() {
   return (
     <MotionIcon
       name="Heart"
       animation="heartbeat"
-      size={32}
+      size={24}
       color="red"
     />
   );
 }
+// Result: Heart icon with smooth heartbeat animation
 ```
+</CodeGroup>
+
+That's it! Just replace your Lucide icon with `MotionIcon` and add an `animation` prop.
 
 ## Get Started
 
@@ -169,7 +192,9 @@ Ready to animate your icons? Follow our step-by-step guide:
   animation="shake"
   trigger="click"
   entrance="fadeInUp"
+  interactive
   size={24}
+  onClick={() => console.log('Notification clicked')}
 />
 ```
 </Accordion>

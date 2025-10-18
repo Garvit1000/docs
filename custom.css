@@ -110,7 +110,7 @@ body {
 .dark [class*="text-"],
 .dark .content {
   color: white !important;
-  background-color: #0F172A !important;
+  background-color: #000000 !important;
 }
 
 /* Site title styling - Dark theme */
@@ -151,19 +151,19 @@ body {
 .dark .container,
 .dark .content-wrapper {
   color: white !important;
-  background-color: #0F172A !important;
+  background-color: #000000 !important;
 }
 
 /* Footer - Dark theme */
 .dark .footer {
-  border-top: 1px solid #334155 !important;
-  background-color: #1E293B !important;
+  border-top: 1px solid #1F1F1F !important;
+  background-color: #000000 !important;
   color: white !important;
 }
 
 /* Dark background */
 .dark body {
-  background-color: #0F172A !important;
+  background-color: #000000 !important;
   color: white !important;
 }
 
@@ -171,7 +171,7 @@ body {
 .dark .content,
 .dark .wrapper,
 .dark .container {
-  background-color: #0F172A !important;
+  background-color: #000000 !important;
   color: white !important;
 }
 
@@ -219,6 +219,8 @@ button[class*="primary"]:hover,
   color: white !important;
 }
 
+
+
 /* Override any mint green colors */
 .mint-green,
 .bg-mint,
@@ -254,5 +256,5 @@ button[class*="primary"]:hover,
 
 .dark .border,
 .dark .divider {
-  border-color: #334155 !important;
+  border-color: #1F1F1F !important;
 }

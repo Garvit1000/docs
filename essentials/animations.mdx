@@ -1,40 +1,71 @@
 ---
 title: "Animation Types"
-description: "Explore all available animations and entrance effects"
+description: "Complete guide to all available animations and entrance effects"
 ---
 
-Motion Icons React offers a rich collection of animations to bring your icons to life. All animations are smooth, performant, and respect accessibility preferences.
+Motion Icons React includes 10+ pre-built animations that you can use right away. This guide explains each animation, when to use it, and how to customize it.
+
+## Understanding Animation Types
+
+There are two types of animations in Motion Icons React:
+
+1. **Main Animations**: Loop continuously (or based on triggers)
+2. **Entrance Animations**: Play once when the icon first appears
+
+You can use them separately or combine them for more complex effects.
 
 ## Main Animations
 
-These animations loop continuously while the component is mounted (unless configured otherwise).
+Main animations loop continuously by default. You can control when they play using the `trigger` prop (see examples below).
 
 ### Pulse
-A gentle pulsing effect that scales the icon slightly.
+A gentle pulsing effect that scales the icon slightly larger and smaller.
 
 ```tsx
 <MotionIcon name="Heart" animation="pulse" />
 ```
 
-**Best for:** Notifications, alerts, highlighting important elements
+**What it does:** Icon smoothly grows to 110% size and shrinks back to 100%, creating a breathing effect.
+
+**Best for:** 
+- Notification badges
+- Drawing attention to important buttons
+- Live status indicators
+- Heartbeat or activity monitors
 
 ### Spin
-Continuous 360-degree rotation.
+Continuous 360-degree rotation at a steady speed.
 
 ```tsx
 <MotionIcon name="Loader2" animation="spin" />
 ```
 
-**Best for:** Loading indicators, refresh buttons, processing states
+**What it does:** Icon rotates clockwise in a complete circle, repeating indefinitely.
+
+**Best for:**
+- Loading spinners
+- Refresh/reload buttons
+- Processing indicators
+- Sync status icons
+
+**Pro tip:** Use with circular icons like `Loader2`, `RefreshCw`, or `Settings` for best visual effect.
 
 ### Bounce
-Vertical bouncing motion with elastic easing.
+Vertical bouncing motion with elastic easing, like a ball bouncing.
 
 ```tsx
 <MotionIcon name="ArrowUp" animation="bounce" />
 ```
 
-**Best for:** Call-to-action buttons, scroll indicators, playful interactions
+**What it does:** Icon moves up and down with a natural bouncing effect, slowing at the top and accelerating down.
+
+**Best for:**
+- Scroll-to-top buttons
+- Download buttons
+- Call-to-action elements
+- Playful, friendly interfaces
+
+**Pro tip:** Works great with directional icons like arrows or icons that suggest movement.
 
 ### Ping
 Radar-like expanding effect with opacity fade.

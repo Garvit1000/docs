@@ -3,7 +3,43 @@ title: "Props Reference"
 description: "Complete reference for all MotionIcon component props"
 ---
 
-This page provides a comprehensive reference for all props available on the `MotionIcon` component.
+This page documents every prop you can use with the `MotionIcon` component. Each prop includes its type, default value, and practical examples.
+
+## Quick Reference
+
+Here's a complete example showing all commonly used props:
+
+```tsx
+<MotionIcon
+  // Required
+  name="Heart"
+  
+  // Appearance
+  size={24}
+  color="red"
+  weight="regular"
+  className="my-icon"
+  
+  // Animation
+  animation="heartbeat"
+  entrance="zoomIn"
+  trigger="hover"
+  animationDuration={1000}
+  animationDelay={200}
+  
+  // Interaction
+  interactive
+  onClick={handleClick}
+  onMouseEnter={handleHover}
+  
+  // Accessibility
+  aria-label="Like button"
+  role="button"
+  tabIndex={0}
+/>
+```
+
+## Detailed Props Documentation
 
 ## Required Props
 
@@ -17,11 +53,26 @@ This page provides a comprehensive reference for all props available on the `Mot
 <MotionIcon name="Heart" />
 <MotionIcon name="Star" />
 <MotionIcon name="Settings" />
+<MotionIcon name="AlertTriangle" />
 ```
 
-<Note>
-  Icon names are case-sensitive and must match the exact Lucide icon names. Check the [Lucide icon library](https://lucide.dev/icons/) for available icons.
-</Note>
+**Important notes:**
+- Icon names are **case-sensitive** (use "Heart", not "heart")
+- Must match exact Lucide icon names (use "CheckCircle", not "CheckCircle2")
+- Browse all available icons at [lucide.dev/icons](https://lucide.dev/icons/)
+
+**Common mistakes:**
+```tsx
+// ❌ Wrong - lowercase
+<MotionIcon name="heart" />
+
+// ❌ Wrong - incorrect name
+<MotionIcon name="check-circle" />
+
+// ✅ Correct
+<MotionIcon name="Heart" />
+<MotionIcon name="CheckCircle" />
+```
 
 ## Appearance Props
 

@@ -129,8 +129,10 @@ function NotificationBell({ hasNotifications = false }) {
         name="Bell"
         animation={hasNotifications ? "wiggle" : "none"}
         trigger="always"
+        interactive
         size={24}
-        className="text-gray-600"
+        className="text-gray-600 cursor-pointer"
+        onClick={() => console.log('Notifications clicked')}
       />
       {hasNotifications && (
         <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full">

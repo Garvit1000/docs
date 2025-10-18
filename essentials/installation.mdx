@@ -25,6 +25,12 @@ yarn add @motion-icons/react lucide-react
 pnpm add @motion-icons/react lucide-react
 ```
 
+### Using bun
+
+```bash
+bun add @motion-icons/react lucide-react
+```
+
 ## CSS Import
 
 Import the required CSS file in your main application file:
@@ -100,14 +106,14 @@ If you're using TypeScript, you'll get:
 
 ## Verification
 
-Test your installation with this simple component:
+Test your installation with this simple component. Copy and paste this into any component file:
 
 ```tsx
 import { MotionIcon } from '@motion-icons/react';
 
 function TestComponent() {
   return (
-    <div>
+    <div style={{ padding: '20px', textAlign: 'center' }}>
       <h1>Motion Icons React Test</h1>
       <MotionIcon 
         name="CheckCircle" 
@@ -119,7 +125,15 @@ function TestComponent() {
     </div>
   );
 }
+
+export default TestComponent;
 ```
+
+**What to expect:**
+- ✅ A blue check mark icon appears
+- ✅ The icon bounces up and down smoothly
+- ❌ If the icon is static, check that you imported the CSS file
+- ❌ If nothing appears, check the browser console for errors
 
 ## Troubleshooting
 
