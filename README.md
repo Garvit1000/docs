@@ -40,8 +40,8 @@ View your local preview at `http://localhost:3000`.
 
 - [Motion Icons React Package](https://www.npmjs.com/package/motion-icons-react)
 - [GitHub Repository](https://github.com/Garvit1000/motion-icons)
-- [Live Demo](https://motion-icons.dev)
-- [Documentation Site](https://motion-icons.dev)
+- [Live Demo](https://motionicons.dev)
+- [Documentation Site](https://motionicons.dev)
 
 ## 📝 Contributing
 
