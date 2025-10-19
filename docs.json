@@ -7,11 +7,7 @@
     "light": "#60A5FA",
     "dark": "#1E40AF"
   },
-  "favicon": "/favicon.svg",
-  "modeToggle": {
-    "default": "light",
-    "isHidden": false
-  },
+  "favicon": "/favicon.ico",
   "navigation": {
     "tabs": [
       {
@@ -97,17 +93,5 @@
       "github": "https://github.com/Garvit1000/motion-icons",
       "x": "https://x.com/garvit1000"
     }
-  },
-  "metadata": {
-    "og:title": "Motion Icons React - Animated Lucide Icons",
-    "og:description": "The easiest way to add smooth animations to Lucide icons in React",
-    "og:image": "https://motion-icons.dev/og-image.png",
-    "twitter:card": "summary_large_image"
-  },
-  "redirects": [
-    {
-      "source": "/docs",
-      "destination": "/"
-    }
-  ]
+  }
 }
