@@ -38,7 +38,7 @@ View your local preview at `http://localhost:3000`.
 
 ## 🔗 Links
 
-- [Motion Icons React Package](https://www.npmjs.com/package/@motion-icons/react)
+- [Motion Icons React Package](https://www.npmjs.com/package/motion-icons-react)
 - [GitHub Repository](https://github.com/Garvit1000/motion-icons)
 - [Live Demo](https://motion-icons.dev)
 - [Documentation Site](https://motion-icons.dev)
@@ -58,4 +58,4 @@ Contributions to improve the documentation are welcome! Please feel free to:
 
 ### Resources
 - [Motion Icons React GitHub](https://github.com/Garvit1000/motion-icons)
-- [NPM Package](https://www.npmjs.com/package/@motion-icons/react)
+- [NPM Package](https://www.npmjs.com/package/motion-icons-react)

@@ -10,25 +10,25 @@ Motion Icons React requires both the main package and Lucide React as a peer dep
 ### Using npm
 
 ```bash
-npm install @motion-icons/react lucide-react
+npm install motion-icons-react lucide-react
 ```
 
 ### Using yarn
 
 ```bash
-yarn add @motion-icons/react lucide-react
+yarn add motion-icons-react lucide-react
 ```
 
 ### Using pnpm
 
 ```bash
-pnpm add @motion-icons/react lucide-react
+pnpm add motion-icons-react lucide-react
 ```
 
 ### Using bun
 
 ```bash
-bun add @motion-icons/react lucide-react
+bun add motion-icons-react lucide-react
 ```
 
 ## CSS Import
@@ -36,8 +36,8 @@ bun add @motion-icons/react lucide-react
 Import the required CSS file in your main application file:
 
 ```tsx title="App.tsx"
-import '@motion-icons/react/style.css';
-import { MotionIcon } from '@motion-icons/react';
+import 'motion-icons-react/style.css';
+import { MotionIcon } from 'motion-icons-react';
 
 function App() {
   return (
@@ -55,7 +55,7 @@ function App() {
 For Next.js applications, import the CSS in your `_app.tsx` or `layout.tsx`:
 
 ```tsx title="pages/_app.tsx"
-import '@motion-icons/react/style.css';
+import 'motion-icons-react/style.css';
 import type { AppProps } from 'next/app';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -68,7 +68,7 @@ export default function App({ Component, pageProps }: AppProps) {
 For Vite projects, import in your main entry file:
 
 ```tsx title="src/main.tsx"
-import '@motion-icons/react/style.css';
+import 'motion-icons-react/style.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -85,7 +85,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 Import in your `src/index.tsx`:
 
 ```tsx title="src/index.tsx"
-import '@motion-icons/react/style.css';
+import 'motion-icons-react/style.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -109,7 +109,7 @@ If you're using TypeScript, you'll get:
 Test your installation with this simple component. Copy and paste this into any component file:
 
 ```tsx
-import { MotionIcon } from '@motion-icons/react';
+import { MotionIcon } from 'motion-icons-react';
 
 function TestComponent() {
   return (
@@ -143,15 +143,15 @@ export default TestComponent;
     
     **Solution:** Make sure you've imported the CSS file:
     ```tsx
-    import '@motion-icons/react/style.css';
+    import 'motion-icons-react/style.css';
     ```
   </Accordion>
 
   <Accordion title="Module not found error">
-    **Problem:** `Cannot resolve module '@motion-icons/react'`
+    **Problem:** `Cannot resolve module 'motion-icons-react'`
     
     **Solution:** 
-    1. Ensure the package is installed: `npm list @motion-icons/react`
+    1. Ensure the package is installed: `npm list motion-icons-react`
     2. Try deleting `node_modules` and reinstalling: `rm -rf node_modules && npm install`
     3. Check that you're importing from the correct package name
   </Accordion>

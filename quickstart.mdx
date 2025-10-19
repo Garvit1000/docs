@@ -63,19 +63,19 @@ Install both Motion Icons React and Lucide React using your preferred package ma
 
 <CodeGroup>
 ```bash npm
-npm install @motion-icons/react lucide-react
+npm install motion-icons-react lucide-react
 ```
 
 ```bash yarn
-yarn add @motion-icons/react lucide-react
+yarn add motion-icons-react lucide-react
 ```
 
 ```bash pnpm
-pnpm add @motion-icons/react lucide-react
+pnpm add motion-icons-react lucide-react
 ```
 
 ```bash bun
-bun add @motion-icons/react lucide-react
+bun add motion-icons-react lucide-react
 ```
 </CodeGroup>
 
@@ -93,7 +93,7 @@ The animations require CSS to work. Import the stylesheet in your main applicati
 - Vite: `src/main.tsx`
 
 ```tsx
-import '@motion-icons/react/style.css';
+import 'motion-icons-react/style.css';
 ```
 
 ### Step 3: Use Your First Animated Icon
@@ -110,7 +110,7 @@ function LikeButton() {
 ```
 
 ```tsx After (Motion Icons React)
-import { MotionIcon } from '@motion-icons/react';
+import { MotionIcon } from 'motion-icons-react';
 
 function LikeButton() {
   return (
@@ -254,7 +254,7 @@ Now that you have Motion Icons React working, explore more features:
   <Accordion icon="exclamation-triangle" title="Animations not working">
     Make sure you've imported the CSS file:
     ```tsx
-    import '@motion-icons/react/style.css';
+    import 'motion-icons-react/style.css';
     ```
   </Accordion>
   
