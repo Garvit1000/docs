@@ -18,7 +18,7 @@ The documentation includes:
 - Accessibility best practices and guidelines
 - Complete API reference with TypeScript support
 
-**[View the live documentation](https://motion-icons.dev)**
+**[View the live documentation](https://motionicons.dev)**
 
 ## 👩‍💻 Development
 
