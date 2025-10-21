@@ -1,0 +1,429 @@
+---
+title: "Vite Setup"
+description: "Complete guide to using Motion Icons React with Vite"
+---
+
+This guide will walk you through setting up Motion Icons React in your Vite application.
+
+## Prerequisites
+
+- Node.js 14 or higher
+- Vite 3+ or Vite 4+
+- Basic familiarity with Vite and React
+
+## Quick Start
+
+### Step 1: Create a Vite Project
+
+If you don't have a Vite project yet, create one:
+
+<CodeGroup>
+```bash npm
+npm create vite@latest my-app -- --template react
+cd my-app
+npm install
+```
+
+```bash yarn
+yarn create vite my-app --template react
+cd my-app
+yarn
+```
+
+```bash pnpm
+pnpm create vite my-app --template react
+cd my-app
+pnpm install
+```
+
+```bash bun
+bun create vite my-app --template react
+cd my-app
+bun install
+```
+</CodeGroup>
+
+For TypeScript, use `--template react-ts` instead of `--template react`.
+
+### Step 2: Install Motion Icons React
+
+Install the required packages:
+
+<CodeGroup>
+```bash npm
+npm install motion-icons-react lucide-react
+```
+
+```bash yarn
+yarn add motion-icons-react lucide-react
+```
+
+```bash pnpm
+pnpm add motion-icons-react lucide-react
+```
+
+```bash bun
+bun add motion-icons-react lucide-react
+```
+</CodeGroup>
+
+### Step 3: Import CSS
+
+Add the CSS import to your main entry file:
+
+```tsx title="src/main.tsx"
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+import 'motion-icons-react/style.css'; // Add this line
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
+```
+
+### Step 4: Use Animated Icons
+
+Now you can use Motion Icons in any component:
+
+```tsx title="src/App.tsx"
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+
+function App() {
+  const [isLiked, setIsLiked] = useState(false);
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="text-center space-y-8">
+        <h1 className="text-4xl font-bold">Motion Icons React</h1>
+        
+        {/* Heartbeat Animation */}
+        <MotionIcon
+          name="Heart"
+          animation="heartbeat"
+          size={80}
+          color="red"
+        />
+        
+        {/* Loading Spinner */}
+        <MotionIcon
+          name="Loader2"
+          animation="spin"
+          size={48}
+          className="text-blue-500"
+        />
+        
+        {/* Interactive Like Button */}
+        <button
+          onClick={() => setIsLiked(!isLiked)}
+          className="p-4 rounded-full hover:bg-gray-200 transition-colors"
+        >
+          <MotionIcon
+            name="Heart"
+            animation={isLiked ? "heartbeat" : "none"}
+            size={32}
+            color={isLiked ? "red" : "gray"}
+            interactive
+          />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+```
+
+### Step 5: Run Development Server
+
+Start your development server:
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:5173` and you should see your animated icons!
+
+## Common Use Cases
+
+### Loading States
+
+```tsx
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+
+function DataFetcher() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState(null);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('https://api.example.com/data');
+      const result = await response.json();
+      setData(result);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="p-4">
+      <button
+        onClick={fetchData}
+        disabled={isLoading}
+        className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg disabled:opacity-50"
+      >
+        {isLoading && (
+          <MotionIcon name="Loader2" animation="spin" size={16} />
+        )}
+        {isLoading ? 'Loading...' : 'Fetch Data'}
+      </button>
+      
+      {data && (
+        <pre className="mt-4 p-4 bg-gray-100 rounded">
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      )}
+    </div>
+  );
+}
+```
+
+### Notification System
+
+```tsx
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+
+function NotificationBell() {
+  const [hasNotifications, setHasNotifications] = useState(true);
+
+  return (
+    <button
+      onClick={() => setHasNotifications(!hasNotifications)}
+      className="relative p-2 rounded-full hover:bg-gray-100"
+    >
+      <MotionIcon
+        name="Bell"
+        animation={hasNotifications ? "wiggle" : "none"}
+        size={24}
+        interactive
+      />
+      {hasNotifications && (
+        <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full">
+          <MotionIcon
+            name="Circle"
+            animation="ping"
+            size={12}
+            className="text-red-500"
+          />
+        </span>
+      )}
+    </button>
+  );
+}
+```
+
+### Form Validation
+
+```tsx
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+
+function EmailInput() {
+  const [email, setEmail] = useState('');
+  const [isValid, setIsValid] = useState<boolean | null>(null);
+
+  const validateEmail = (value: string) => {
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    setIsValid(isValidEmail);
+  };
+
+  return (
+    <div className="relative">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => {
+          setEmail(e.target.value);
+          validateEmail(e.target.value);
+        }}
+        className="w-full px-4 py-2 pr-10 border rounded-lg"
+        placeholder="Enter your email"
+      />
+      {isValid !== null && (
+        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+          {isValid ? (
+            <MotionIcon
+              name="CheckCircle"
+              animation="tada"
+              entrance="zoomIn"
+              size={20}
+              className="text-green-500"
+            />
+          ) : (
+            <MotionIcon
+              name="XCircle"
+              animation="shake"
+              entrance="fadeIn"
+              size={20}
+              className="text-red-500"
+            />
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Animations not working">
+    **Problem:** Icons appear but don't animate.
+    
+    **Solution:**
+    1. Verify you imported the CSS in `src/main.tsx`:
+       ```tsx
+       import 'motion-icons-react/style.css';
+       ```
+    2. Clear Vite cache and restart:
+       ```bash
+       rm -rf node_modules/.vite
+       npm run dev
+       ```
+    3. Hard refresh your browser (Ctrl+Shift+R or Cmd+Shift+R)
+  </Accordion>
+
+  <Accordion title="Module not found error">
+    **Problem:** `Cannot find module 'motion-icons-react'`
+    
+    **Solution:**
+    1. Ensure the package is installed:
+       ```bash
+       npm list motion-icons-react
+       ```
+    2. Delete node_modules and reinstall:
+       ```bash
+       rm -rf node_modules package-lock.json
+       npm install
+       ```
+    3. Restart your dev server
+  </Accordion>
+
+  <Accordion title="Icons not displaying">
+    **Problem:** Nothing appears where icons should be.
+    
+    **Solution:**
+    1. Check that lucide-react is installed
+    2. Verify the icon name is correct (check [Lucide icons](https://lucide.dev/icons/))
+    3. Check browser console for errors
+  </Accordion>
+
+  <Accordion title="Build errors">
+    **Problem:** Errors during `npm run build`
+    
+    **Solution:**
+    1. Ensure both packages are in dependencies (not devDependencies)
+    2. Clear build cache:
+       ```bash
+       rm -rf dist
+       npm run build
+       ```
+    3. Check that TypeScript types are properly installed
+  </Accordion>
+</AccordionGroup>
+
+## Performance Tips
+
+### 1. Optimize Bundle Size
+
+Vite automatically tree-shakes unused code, but you can further optimize:
+
+```tsx
+// Good: Import only what you need
+import { MotionIcon } from 'motion-icons-react';
+
+// Avoid: Don't import everything
+// import * as MotionIcons from 'motion-icons-react';
+```
+
+### 2. Use Animation Triggers Wisely
+
+Reduce continuous animations by using triggers:
+
+```tsx
+// Better performance: Only animates on hover
+<MotionIcon
+  name="Star"
+  animation="pulse"
+  trigger="hover"
+/>
+
+// More resource intensive: Always animating
+<MotionIcon
+  name="Star"
+  animation="pulse"
+  trigger="always"
+/>
+```
+
+### 3. Lazy Load Heavy Components
+
+For pages with many animated icons:
+
+```tsx
+import { lazy, Suspense } from 'react';
+
+const HeavyIconSection = lazy(() => import('./HeavyIconSection'));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeavyIconSection />
+    </Suspense>
+  );
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Animation Types"
+    icon="play"
+    href="/essentials/animations"
+  >
+    Explore all available animations
+  </Card>
+  
+  <Card
+    title="Examples"
+    icon="code"
+    href="/essentials/examples"
+  >
+    See more real-world examples
+  </Card>
+  
+  <Card
+    title="API Reference"
+    icon="settings"
+    href="/api-reference/props"
+  >
+    Complete props documentation
+  </Card>
+  
+  <Card
+    title="Accessibility"
+    icon="universal-access"
+    href="/essentials/accessibility"
+  >
+    Learn about accessibility features
+  </Card>
+</CardGroup>

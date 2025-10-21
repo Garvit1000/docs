@@ -1,0 +1,326 @@
+---
+title: "Changelog"
+description: "Track updates, new features, and improvements to Motion Icons React"
+---
+
+All notable changes to Motion Icons React are documented on this page. We follow [Semantic Versioning](https://semver.org/).
+
+---
+
+## [1.0.3] - October 2025
+
+### Critical Bug Fix: Next.js Animation Support
+
+This release fixes a critical issue where animations were not working in Next.js applications despite working perfectly in regular React apps.
+
+### Problem Identified
+
+Animations appeared static in Next.js applications even though:
+- CSS was loaded correctly
+- Classes were applied to elements
+- DevTools showed `animation: running`
+- No console errors were present
+
+### Root Cause
+
+Tailwind CSS utility classes were conflicting with CSS animation transforms. The component was using Tailwind classes like `inline-flex items-center justify-center` which set CSS properties that interfered with the animation's `transform` property.
+
+### Changes Made
+
+#### 1. Removed Conflicting Tailwind Classes
+
+**Before:**
+```tsx
+className={cn(
+  'inline-flex items-center justify-center',  // Conflicting classes
+  interactive && 'cursor-pointer transition-transform duration-200',
+  shouldAnimate && animationClass,
+  className
+)}
+```
+
+**After:**
+```tsx
+className={cn(
+  shouldAnimate && animationClass,  // Animation class first
+  interactive && 'cursor-pointer',  // Removed transition-transform
+  className
+)}
+style={{
+  display: 'inline-flex',           // Moved to inline styles
+  alignItems: 'center',
+  justifyContent: 'center',
+}}
+```
+
+**Why this fixes it:** Tailwind's utility classes can override CSS animation properties. Moving layout properties to inline styles prevents conflicts and ensures animation classes have proper specificity.
+
+#### 2. Fixed SSR Hydration Issue
+
+**Before:**
+```tsx
+const [isAnimating, setIsAnimating] = useState(trigger === 'always');
+```
+
+**After:**
+```tsx
+const [isAnimating, setIsAnimating] = useState(false);
+
+useEffect(() => {
+  if (trigger === 'always') {
+    setIsAnimating(true);
+  }
+}, [trigger]);
+```
+
+**Why this fixes it:** Prevents hydration mismatch between server and client, ensures animations start after component mounts, and provides better Next.js SSR compatibility.
+
+#### 3. Improved Trigger Logic
+
+**Before:**
+```tsx
+const shouldAnimate = isAnimating && animation !== 'none';
+```
+
+**After:**
+```tsx
+const shouldAnimate = (trigger === 'always' || isAnimating) && animation !== 'none';
+```
+
+**Why this fixes it:** The `trigger="always"` now applies animation immediately without waiting for state update, making continuous animations more reliable.
+
+#### 4. Removed Inline Animation Duration Override
+
+**Before:**
+```tsx
+style={{
+  animationDuration: `${animationDuration}ms`,  // Always applied
+  animationDelay: `${animationDelay}ms`,
+}}
+```
+
+**After:**
+```tsx
+style={{
+  ...(entrance && !hasEntered && { animationDuration: `${animationDuration}ms` }),
+  ...(animationDelay > 0 && { animationDelay: `${animationDelay}ms` }),
+}}
+```
+
+**Why this fixes it:** Inline styles have higher specificity than CSS classes. The CSS defines animations as `infinite`, but inline style was overriding this. Now only applies duration for entrance animations where needed.
+
+### Testing Results
+
+**Before v1.0.3:**
+- Works in React
+- Static in Next.js
+- Static in Next.js + Tailwind
+
+**After v1.0.3:**
+- Works in React
+- Works in Next.js
+- Works in Next.js + Tailwind
+- Works with Turbopack 
+- Works with SSR
+
+### Migration Guide
+
+If you're upgrading from v1.0.2:
+
+1. **Update the package:**
+   ```bash
+   npm install motion-icons-react@latest
+   ```
+
+2. **Clear Next.js cache (recommended):**
+   ```bash
+   rm -rf .next
+   npm run dev
+   ```
+
+3. **Hard refresh browser:**
+   - Windows/Linux: Ctrl + Shift + R
+   - Mac: Cmd + Shift + R
+
+No code changes are required in your application.
+
+### Technical Details
+
+The problem was a CSS specificity conflict where Tailwind utility classes interfered with animation transforms. By moving non-animation styles to inline styles (which have highest specificity), we ensure:
+- Layout styles don't interfere with animations
+- Animation classes work consistently
+- No conflicts with Tailwind or other CSS frameworks
+
+### Files Changed
+
+- `src/components/MotionIcon.tsx` - Main component fix
+- `src/animations/animations.css` - Enhanced animation keyframes
+- `package.json` - Version bump to 1.0.3
+
+---
+
+## [1.0.2] - October 2025
+
+### Bug Fixes
+
+- Minor performance improvements
+- Documentation updates
+- TypeScript type refinements
+
+---
+
+## [1.0.0] - October 2025
+
+### Initial Stable Release
+
+The first production-ready release of Motion Icons React. This release brings smooth, accessible animations to Lucide React icons with zero configuration.
+
+### New Features
+
+#### Core Animations
+- **11 Built-in Animations**: Complete animation library including:
+  - `pulse` - Gentle pulsing scale effect
+  - `spin` - Continuous 360° rotation
+  - `bounce` - Vertical bouncing with elastic easing
+  - `ping` - Radar-like expanding effect
+  - `wiggle` - Side-to-side shaking
+  - `flip` - 3D flip animation
+  - `heartbeat` - Double-pulse effect
+  - `shake` - Horizontal shaking motion
+  - `swing` - Pendulum-like rotation
+  - `tada` - Attention-grabbing celebration
+  - `rubber` - Rubber band elastic effect
+
+#### Entrance Animations
+- **10 Entrance Effects**: Make icons appear with style
+  - `fadeIn`, `fadeInUp`, `fadeInDown`, `fadeInLeft`, `fadeInRight`
+  - `scaleIn`, `slideInUp`, `slideInDown`
+  - `rotateIn`, `zoomIn`
+
+#### Animation Control
+- **4 Trigger Types**: Control when animations play
+  - `always` - Continuous animation (default)
+  - `hover` - Animate on mouse hover
+  - `click` - Animate on click
+  - `focus` - Animate on keyboard focus
+- **Customizable Timing**: Full control over duration and delay
+- **Interactive Mode**: Built-in hover effects for clickable icons
+
+#### Developer Experience
+- **TypeScript First**: Complete type definitions with IntelliSense
+- **Zero Configuration**: Works immediately after installation
+- **Framework Agnostic**: Compatible with Next.js, Vite, CRA, and more
+- **Tree Shakeable**: Only bundle what you use
+
+#### Accessibility
+- **Motion Preferences**: Automatic respect for `prefers-reduced-motion`
+- **Keyboard Navigation**: Full keyboard accessibility support
+- **Screen Reader Friendly**: Proper ARIA attributes
+- **Focus Management**: Visible focus indicators
+
+### Package Details
+
+- **Package Name**: `motion-icons-react`
+- **Peer Dependencies**: `lucide-react` (for icon shapes)
+- **Bundle Size**: ~15KB gzipped (core) + ~8KB (CSS)
+- **Browser Support**: Chrome 60+, Firefox 55+, Safari 12+, Edge 79+
+
+### Documentation
+
+- **Comprehensive Guides**: Step-by-step setup for Next.js and Vite
+- **API Reference**: Complete props documentation with examples
+- **Real-World Examples**: 20+ practical use cases
+- **Accessibility Guide**: Best practices for inclusive design
+- **Interactive Demos**: Live examples for all animations
+
+### Customization Options
+
+```tsx
+<MotionIcon
+  name="Heart"              // Icon name (required)
+  animation="heartbeat"     // Animation type
+  entrance="zoomIn"         // Entrance effect
+  trigger="hover"           // When to animate
+  size={32}                 // Icon size
+  color="red"               // Icon color
+  weight="bold"             // Stroke weight
+  interactive               // Enable hover effects
+  animationDuration={1000}  // Duration in ms
+  animationDelay={200}      // Delay in ms
+  className="custom-class"  // Additional CSS
+  onClick={handleClick}     // Event handlers
+/>
+```
+
+---
+
+## Roadmap
+
+### Planned for v1.1.0
+
+- **Custom Animations**: Define your own keyframe animations
+- **Animation Sequences**: Chain multiple animations together
+- **More Entrance Effects**: 5+ additional entrance animations
+- **Animation Presets**: Pre-configured combinations for common patterns
+- **Performance Mode**: Reduced animation complexity for low-end devices
+
+### Future Considerations
+
+- **Animation Builder**: Visual tool for creating custom animations
+- **React Native Support**: Bring animations to mobile apps
+- **Animation Timeline**: Control animation playback programmatically
+- **Gesture Support**: Touch and swipe gesture triggers
+- **Sound Effects**: Optional audio feedback for animations
+
+---
+
+## Migration Guides
+
+### From Beta to v1.0.0
+
+No breaking changes! The API is fully backward compatible.
+
+**Recommended updates:**
+```tsx
+// Old (still works)
+<MotionIcon name="Heart" animation="pulse" />
+
+// New (with entrance effect)
+<MotionIcon 
+  name="Heart" 
+  animation="pulse" 
+  entrance="fadeIn" 
+/>
+```
+
+---
+
+## Contributing
+
+We welcome contributions from the community!
+
+### How to Contribute
+
+1. **Report Bugs**: [Open an issue](https://github.com/Garvit1000/motion-icons/issues/new?template=bug_report.md)
+2. **Request Features**: [Start a discussion](https://github.com/Garvit1000/motion-icons/discussions/new?category=ideas)
+3. **Submit PRs**: [Contribution guidelines](https://github.com/Garvit1000/motion-icons/blob/main/CONTRIBUTING.md)
+4. **Improve Docs**: Help us make documentation better
+
+### Contributors
+
+Thank you to everyone who contributed to this release! 🎉
+
+---
+
+## Support
+
+- **Documentation**: [motion-icons.dev](https://motion-icons.dev)
+- **GitHub Issues**: [Report bugs](https://github.com/Garvit1000/motion-icons/issues)
+- **Discussions**: [Ask questions](https://github.com/Garvit1000/motion-icons/discussions)
+- **Email**: garvitjoshi543@gmail.com
+
+---
+
+## License
+
+Motion Icons React is [MIT licensed](https://github.com/Garvit1000/motion-icons/blob/main/LICENSE).

@@ -1,0 +1,432 @@
+---
+title: "Next.js Setup"
+description: "Complete guide to using Motion Icons React with Next.js"
+---
+
+This guide will walk you through setting up Motion Icons React in your Next.js application, whether you're using the App Router or Pages Router.
+
+## Prerequisites
+
+- Node.js 14 or higher
+- Next.js 13+ (for App Router) or Next.js 12+ (for Pages Router)
+- Basic familiarity with Next.js
+
+## Installation
+
+First, install the required packages:
+
+<CodeGroup>
+```bash npm
+npm install motion-icons-react@latest lucide-react
+```
+
+```bash yarn
+yarn add motion-icons-react@latest lucide-react
+```
+
+```bash pnpm
+pnpm add motion-icons-react@latest lucide-react
+```
+
+```bash bun
+bun add motion-icons-react@latest lucide-react
+```
+</CodeGroup>
+
+## Setup for App Router (Next.js 13+)
+
+The App Router is the recommended approach for new Next.js applications.
+
+### Step 1: Use in Client Components
+
+Motion Icons React requires client-side JavaScript, so use the `'use client'` directive and import the CSS:
+
+```tsx title="app/page.tsx"
+'use client';
+
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+export default function Home() {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-center space-y-8">
+        <h1 className="text-4xl font-bold">Welcome!</h1>
+        
+        {/* Animated heart icon */}
+        <MotionIcon
+          name="Heart"
+          animation="heartbeat"
+          size={80}
+          color="red"
+        />
+        
+        {/* Loading spinner */}
+        <MotionIcon
+          name="Loader2"
+          animation="spin"
+          size={32}
+          className="text-blue-500"
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+<Note>
+  **Important:** Import the CSS file (`import 'motion-icons-react/style.css';`) in any component that uses Motion Icons. Next.js will automatically handle the CSS bundling.
+</Note>
+
+### Step 2: Create Reusable Components
+
+For better organization, create reusable icon components:
+
+```tsx title="components/AnimatedIcons.tsx"
+'use client';
+
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+export function LoadingSpinner() {
+  return (
+    <MotionIcon
+      name="Loader2"
+      animation="spin"
+      size={20}
+      className="text-gray-500"
+    />
+  );
+}
+
+export function LikeButton({ isLiked, onClick }: { isLiked: boolean; onClick: () => void }) {
+  return (
+    <button onClick={onClick} className="p-2 rounded-full hover:bg-gray-100">
+      <MotionIcon
+        name="Heart"
+        animation={isLiked ? "heartbeat" : "none"}
+        size={24}
+        color={isLiked ? "red" : "gray"}
+        interactive
+      />
+    </button>
+  );
+}
+```
+
+Then use them in any component:
+
+```tsx title="app/page.tsx"
+'use client';
+
+import { useState } from 'react';
+import { LoadingSpinner, LikeButton } from '@/components/AnimatedIcons';
+
+export default function Home() {
+  const [isLiked, setIsLiked] = useState(false);
+  
+  return (
+    <div>
+      <LoadingSpinner />
+      <LikeButton isLiked={isLiked} onClick={() => setIsLiked(!isLiked)} />
+    </div>
+  );
+}
+```
+
+## Setup for Pages Router (Next.js 12+)
+
+If you're using the Pages Router, follow these steps:
+
+### Step 1: Use in Pages
+
+Import the CSS and use Motion Icons in your pages:
+
+```tsx title="pages/index.tsx"
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+export default function Home() {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-center space-y-8">
+        <h1 className="text-4xl font-bold">Welcome!</h1>
+        
+        <MotionIcon
+          name="Heart"
+          animation="heartbeat"
+          size={80}
+          color="red"
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+## Common Use Cases
+
+### Loading States
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+
+export default function DataFetcher() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState(null);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    const response = await fetch('/api/data');
+    const result = await response.json();
+    setData(result);
+    setIsLoading(false);
+  };
+
+  return (
+    <div>
+      <button onClick={fetchData} disabled={isLoading}>
+        {isLoading ? (
+          <>
+            <MotionIcon name="Loader2" animation="spin" size={16} />
+            Loading...
+          </>
+        ) : (
+          'Fetch Data'
+        )}
+      </button>
+      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+    </div>
+  );
+}
+```
+
+### Interactive Navigation
+
+```tsx
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { MotionIcon } from 'motion-icons-react';
+
+export function Navigation() {
+  const pathname = usePathname();
+
+  const links = [
+    { href: '/', icon: 'Home', label: 'Home' },
+    { href: '/about', icon: 'Info', label: 'About' },
+    { href: '/contact', icon: 'Mail', label: 'Contact' },
+  ];
+
+  return (
+    <nav className="flex gap-4">
+      {links.map((link) => {
+        const isActive = pathname === link.href;
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100"
+          >
+            <MotionIcon
+              name={link.icon}
+              animation={isActive ? "bounce" : "none"}
+              trigger="hover"
+              size={20}
+              className={isActive ? "text-blue-500" : "text-gray-600"}
+            />
+            <span>{link.label}</span>
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+```
+
+### Form Validation Feedback
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+
+export function EmailForm() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      // Submit logic here
+      setStatus('success');
+    } catch (error) {
+      setStatus('error');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="relative">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-4 py-2 border rounded-lg"
+          placeholder="Enter your email"
+        />
+        {status === 'success' && (
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+            <MotionIcon
+              name="CheckCircle"
+              animation="tada"
+              entrance="zoomIn"
+              size={20}
+              className="text-green-500"
+            />
+          </div>
+        )}
+        {status === 'error' && (
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+            <MotionIcon
+              name="XCircle"
+              animation="shake"
+              entrance="fadeIn"
+              size={20}
+              className="text-red-500"
+            />
+          </div>
+        )}
+      </div>
+      <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-lg">
+        Subscribe
+      </button>
+    </form>
+  );
+}
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Animations not working">
+    **Problem:** Icons appear but don't animate.
+    
+    **Solution:**
+    1. Make sure you imported the CSS in your layout/app file:
+       ```tsx
+       import 'motion-icons-react/style.css';
+       ```
+    2. Verify you're using `'use client'` directive in components that use animations
+    3. Clear Next.js cache: `rm -rf .next && npm run dev`
+  </Accordion>
+
+  <Accordion title="Hydration errors">
+    **Problem:** Getting hydration mismatch errors.
+    
+    **Solution:**
+    1. Ensure you're using `'use client'` in components with MotionIcon
+    2. Don't use animations that depend on client-side state during SSR
+    3. Use dynamic imports if needed:
+       ```tsx
+       import dynamic from 'next/dynamic';
+       
+       const AnimatedIcon = dynamic(
+         () => import('@/components/AnimatedIcon'),
+         { ssr: false }
+       );
+       ```
+  </Accordion>
+
+  <Accordion title="Icons not showing in production">
+    **Problem:** Icons work in development but not in production build.
+    
+    **Solution:**
+    1. Verify CSS is imported in the root layout
+    2. Check that lucide-react is installed as a dependency (not devDependency)
+    3. Clear build cache: `rm -rf .next && npm run build`
+  </Accordion>
+
+  <Accordion title="TypeScript errors">
+    **Problem:** TypeScript compilation errors.
+    
+    **Solution:**
+    1. Ensure you have @types/react installed
+    2. Update TypeScript to version 4.0 or higher
+    3. Check that both packages are properly installed:
+       ```bash
+       npm list motion-icons-react lucide-react
+       ```
+  </Accordion>
+</AccordionGroup>
+
+## Performance Tips
+
+### 1. Use Dynamic Imports for Heavy Pages
+
+If you have many animated icons, consider lazy loading:
+
+```tsx
+import dynamic from 'next/dynamic';
+
+const HeavyIconSection = dynamic(() => import('@/components/HeavyIconSection'), {
+  loading: () => <p>Loading...</p>,
+});
+```
+
+### 2. Optimize Animation Triggers
+
+Use `trigger="hover"` or `trigger="click"` instead of `trigger="always"` to reduce continuous animations:
+
+```tsx
+<MotionIcon
+  name="Star"
+  animation="pulse"
+  trigger="hover" // Only animates on hover
+/>
+```
+
+### 3. Limit Simultaneous Animations
+
+Avoid having too many icons animating at once. Use animations strategically for important UI elements.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Animation Types"
+    icon="play"
+    href="/essentials/animations"
+  >
+    Explore all available animations
+  </Card>
+  
+  <Card
+    title="Examples"
+    icon="code"
+    href="/essentials/examples"
+  >
+    See more real-world examples
+  </Card>
+  
+  <Card
+    title="API Reference"
+    icon="settings"
+    href="/api-reference/props"
+  >
+    Complete props documentation
+  </Card>
+  
+  <Card
+    title="Accessibility"
+    icon="universal-access"
+    href="/essentials/accessibility"
+  >
+    Learn about accessibility features
+  </Card>
+</CardGroup>

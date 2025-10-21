@@ -24,9 +24,17 @@
             "group": "Essentials",
             "pages": [
               "essentials/installation",
+              "essentials/nextjs-setup",
+              "essentials/vite-setup",
               "essentials/animations",
               "essentials/examples",
               "essentials/accessibility"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "changelog"
             ]
           }
         ]

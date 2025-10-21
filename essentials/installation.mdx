@@ -1,98 +1,90 @@
 ---
 title: "Installation"
-description: "Install and configure Motion Icons React in your project"
+description: "Get started with Motion Icons React in your project"
 ---
 
-## Package Installation
+## Pick Your Framework
 
-Motion Icons React requires both the main package and Lucide React as a peer dependency.
+Start by selecting your framework of choice. Motion Icons React works seamlessly with all modern React frameworks.
 
-### Using npm
+<CardGroup cols={2}>
+  <Card
+    title="Next.js"
+    icon="N"
+    href="/essentials/nextjs-setup"
+  >
+    Set up Motion Icons React in your Next.js application (App Router or Pages Router)
+  </Card>
+  
+  <Card
+    title="Vite"
+    icon="zap"
+    href="/essentials/vite-setup"
+  >
+    Set up Motion Icons React in your Vite + React application
+  </Card>
+</CardGroup>
 
-```bash
+## Quick Installation
+
+If you just want to install the packages quickly, use one of these commands:
+
+<CodeGroup>
+```bash npm
 npm install motion-icons-react lucide-react
 ```
 
-### Using yarn
-
-```bash
+```bash yarn
 yarn add motion-icons-react lucide-react
 ```
 
-### Using pnpm
-
-```bash
+```bash pnpm
 pnpm add motion-icons-react lucide-react
 ```
 
-### Using bun
-
-```bash
+```bash bun
 bun add motion-icons-react lucide-react
 ```
+</CodeGroup>
 
-## CSS Import
+<Note>
+  **Why lucide-react?** Motion Icons React is built on top of Lucide React icons. Lucide provides the icon shapes, while Motion Icons adds the animation layer.
+</Note>
+
+## General Setup
+
+After installation, follow these general steps for any React project:
+
+### Step 1: Import CSS
 
 Import the required CSS file in your main application file:
 
-```tsx title="App.tsx"
+```tsx
 import 'motion-icons-react/style.css';
+```
+
+### Step 2: Use Animated Icons
+
+Import and use the MotionIcon component:
+
+```tsx
 import { MotionIcon } from 'motion-icons-react';
 
 function App() {
   return (
     <div>
-      <MotionIcon name="Heart" animation="pulse" />
+      <MotionIcon 
+        name="Heart" 
+        animation="heartbeat" 
+        size={32}
+        color="red"
+      />
     </div>
   );
 }
 ```
 
-## Framework-Specific Setup
-
-### Next.js
-
-For Next.js applications, import the CSS in your `_app.tsx` or `layout.tsx`:
-
-```tsx title="pages/_app.tsx"
-import 'motion-icons-react/style.css';
-import type { AppProps } from 'next/app';
-
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
-}
-```
-
-### Vite
-
-For Vite projects, import in your main entry file:
-
-```tsx title="src/main.tsx"
-import 'motion-icons-react/style.css';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-```
-
-### Create React App
-
-Import in your `src/index.tsx`:
-
-```tsx title="src/index.tsx"
-import 'motion-icons-react/style.css';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-
-const root = ReactDOM.createRoot(document.getElementById('root')!);
-root.render(<App />);
-```
+That's it! For framework-specific instructions, see the guides above.
 
 ## TypeScript Configuration
 
