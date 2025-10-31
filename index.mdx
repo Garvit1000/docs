@@ -45,16 +45,51 @@ a {
 `}
 </style>
 
-**Motion Icons React** is a React library that adds smooth, customizable animations to Lucide icons. Think of it as Lucide React with superpowers - you get all the icons you love, plus built-in animations like spin, bounce, pulse, and more.
+**Animations without animation complexity.**
 
-### Why Use Motion Icons React?
+Motion Icons React is the easiest way to animate icons in React. No framer-motion boilerplate. No variants. Just props.
 
-Instead of writing custom CSS animations for every icon, Motion Icons React gives you:
-- **Pre-built animations**: 10+ ready-to-use animation types
-- **Zero configuration**: Works out of the box with sensible defaults
-- **Full control**: Customize timing, triggers, and behavior
-- **TypeScript support**: Complete type safety and autocomplete
-- **Accessibility first**: Respects user motion preferences automatically
+### The Problem
+
+Animating icons in React today is annoyingly repetitive:
+
+```tsx
+// With framer-motion - too much boilerplate
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0, rotate: 360 }}
+  transition={{ duration: 1 }}
+>
+  <Bell />
+</motion.div>
+```
+
+You need to:
+- Import framer-motion and wrap every icon
+- Remember animation curves and timing functions
+- Juggle initial/animate/transition props
+- Handle hover/press states manually
+- Write custom variants for each animation
+
+### The Solution
+
+Motion Icons React collapses all of that into one line:
+
+```tsx
+<MotionIcon name="Bell" animation="spin" entrance="fadeInUp" />
+```
+
+That's it. No wrappers. No variants. No complexity.
+
+### Why Motion Icons React?
+
+- **3500+ icons** through Lucide React
+- **15+ preset animations** ready to use
+- **Declarative API** - just props, no complexity
+- **Interactive states** built-in (hover, click, focus)
+- **TypeScript support** with full autocomplete
+- **Accessibility first** - respects prefers-reduced-motion
+- **Production-ready defaults** - subtle, professional animations
 
 ## Key Features
 
@@ -81,37 +116,40 @@ Instead of writing custom CSS animations for every icon, Motion Icons React give
 
 ## Quick Example
 
-Here's a simple comparison showing how easy it is to add animations:
+### Minimal Usage (1 prop)
 
-<CodeGroup>
-```tsx Without Motion Icons (Plain Lucide)
-import { Heart } from 'lucide-react';
-
-function LikeButton() {
-  return <Heart size={24} color="red" />;
-}
-// Result: Static heart icon
+```tsx
+<MotionIcon name="Heart" animation="pulse" />
 ```
 
-```tsx With Motion Icons (Animated)
-import { MotionIcon } from 'motion-icons-react';
-import 'motion-icons-react/style.css';
+### With Entrance Effect
 
-function LikeButton() {
-  return (
-    <MotionIcon
-      name="Heart"
-      animation="heartbeat"
-      size={24}
-      color="red"
-    />
-  );
-}
-// Result: Heart icon with smooth heartbeat animation
+```tsx
+<MotionIcon name="Bell" entrance="fadeInUp" />
 ```
-</CodeGroup>
 
-That's it! Just replace your Lucide icon with `MotionIcon` and add an `animation` prop.
+### Interactive Hover
+
+```tsx
+<MotionIcon name="ThumbsUp" animation="bounce" trigger="hover" interactive />
+```
+
+### Full Customization (only when needed)
+
+```tsx
+<MotionIcon
+  name="Star"
+  size={48}
+  color="#FFD700"
+  animation="spin"
+  entrance="zoomIn"
+  animationDuration={1500}
+  trigger="hover"
+  interactive
+/>
+```
+
+**All animation props are optional.** Defaults are subtle and production-friendly.
 
 ## Get Started
 

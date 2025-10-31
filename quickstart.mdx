@@ -132,9 +132,40 @@ function LikeButton() {
 
 That's it! Your icon now has a smooth heartbeat animation.
 
+## Good Defaults
+
+**All animation props are optional.** Motion Icons React uses subtle, production-friendly defaults:
+
+- **Size**: 24px (standard icon size)
+- **Color**: `currentColor` (inherits from parent)
+- **Animation**: `none` (static by default)
+- **Duration**: 1000ms (1 second)
+- **Trigger**: `always` (continuous animation)
+- **Weight**: `regular` (balanced stroke)
+
+You only specify what you want to change:
+
+```tsx
+// Minimal - uses all defaults except animation
+<MotionIcon name="Heart" animation="pulse" />
+
+// Custom size and color
+<MotionIcon name="Star" size={32} color="#FFD700" />
+
+// Full control (only when needed)
+<MotionIcon
+  name="Bell"
+  size={48}
+  color="red"
+  animation="shake"
+  animationDuration={500}
+  trigger="hover"
+/>
+```
+
 ## Try Different Animations
 
-Motion Icons React includes 10+ built-in animations. Here are some popular ones:
+Motion Icons React includes 15+ built-in animations. Here are some popular ones:
 
 <Tabs>
   <Tab title="Spin Animation">

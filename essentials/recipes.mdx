@@ -1,0 +1,646 @@
+---
+title: "Recipes"
+description: "Copy-paste UI patterns with Motion Icons React"
+---
+
+<Card
+  title="🎮 Try Live Playground"
+  icon="play"
+  href="https://motionicons.dev"
+  horizontal
+>
+  See all these recipes in action with interactive controls
+</Card>
+
+<style>
+{`
+/* Hide Mintlify branding */
+[class*="powered"],
+[class*="mintlify"],
+.footer-branding,
+.powered-by,
+a[href*="mintlify.com"],
+a[href*="mintlify"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Light theme - dark text on white background */
+body, p, span, div, h1, h2, h3, h4, h5, h6 {
+  color: #1E293B !important;
+  background-color: white !important;
+}
+
+/* Dark theme - white text on black background */
+.dark body, .dark p, .dark span, .dark div, 
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: white !important;
+  background-color: #000000 !important;
+}
+
+/* Blue hover states for both themes */
+a:hover {
+  color: #2563EB !important;
+}
+
+/* Links - dark in light mode, white in dark mode */
+a {
+  color: #475569 !important;
+}
+
+.dark a {
+  color: white !important;
+}
+
+/* Animations for previews */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+`}
+</style>
+
+Real-world UI patterns you can copy and paste into your project.
+
+<Card
+  title="🎮 Interactive Playground"
+  icon="play"
+  href="https://motionicons.dev"
+  horizontal
+>
+  Try all these recipes live with real Motion Icons animations at motionicons.dev
+</Card>
+
+## Social Reactions
+
+### Like Button
+
+```tsx
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function LikeButton() {
+  const [isLiked, setIsLiked] = useState(false);
+  const [count, setCount] = useState(42);
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    setCount(isLiked ? count - 1 : count + 1);
+  };
+
+  return (
+    <button
+      onClick={handleLike}
+      className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+    >
+      <MotionIcon
+        name="Heart"
+        animation={isLiked ? "heartbeat" : "none"}
+        trigger="always"
+        size={20}
+        color={isLiked ? "#ef4444" : "#6b7280"}
+        className={isLiked ? "fill-current" : ""}
+      />
+      <span className={isLiked ? "text-red-500 font-medium" : "text-gray-600"}>
+        {count}
+      </span>
+    </button>
+  );
+}
+```
+
+### Share Button
+
+```tsx
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function ShareButton() {
+  const [isShared, setIsShared] = useState(false);
+
+  const handleShare = () => {
+    setIsShared(true);
+    setTimeout(() => setIsShared(false), 2000);
+  };
+
+  return (
+    <button
+      onClick={handleShare}
+      className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors"
+    >
+      <MotionIcon
+        name={isShared ? "Check" : "Share2"}
+        animation={isShared ? "tada" : "none"}
+        entrance={isShared ? "zoomIn" : undefined}
+        size={20}
+        color="#3b82f6"
+      />
+      <span className="text-blue-600">
+        {isShared ? "Shared!" : "Share"}
+      </span>
+    </button>
+  );
+}
+```
+
+## Navigation
+
+### Hover Bounce Menu Items
+
+```tsx
+function NavItem({ icon, label, href, isActive }) {
+  return (
+    <a
+      href={href}
+      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+        isActive
+          ? "bg-blue-50 text-blue-600"
+          : "text-gray-700 hover:bg-gray-50"
+      }`}
+    >
+      <MotionIcon
+        name={icon}
+        animation="bounce"
+        trigger="hover"
+        size={20}
+        color={isActive ? "#3b82f6" : "#6b7280"}
+      />
+      <span className="font-medium">{label}</span>
+    </a>
+  );
+}
+
+// Usage
+<nav className="space-y-1">
+  <NavItem icon="Home" label="Dashboard" href="/" isActive />
+  <NavItem icon="Users" label="Team" href="/team" />
+  <NavItem icon="Settings" label="Settings" href="/settings" />
+</nav>
+```
+
+### Animated Breadcrumbs
+
+```tsx
+function Breadcrumbs({ items }) {
+  return (
+    <nav className="flex items-center gap-2 text-sm">
+      {items.map((item, index) => (
+        <div key={index} className="flex items-center gap-2">
+          {index > 0 && (
+            <MotionIcon
+              name="ChevronRight"
+              size={16}
+              className="text-gray-400"
+              entrance="fadeInRight"
+            />
+          )}
+          <a
+            href={item.href}
+            className={`${
+              index === items.length - 1
+                ? "text-gray-900 font-medium"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            {item.label}
+          </a>
+        </div>
+      ))}
+    </nav>
+  );
+}
+
+// Usage
+<Breadcrumbs
+  items={[
+    { label: "Home", href: "/" },
+    { label: "Products", href: "/products" },
+    { label: "Details", href: "/products/123" },
+  ]}
+/>
+```
+
+## Status Indicators
+
+### Live Indicator
+
+```tsx
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function LiveBadge() {
+  return (
+    <div className="inline-flex items-center gap-2 px-3 py-1 bg-red-50 border border-red-200 rounded-full">
+      <MotionIcon
+        name="Circle"
+        animation="pulse"
+        size={8}
+        className="text-red-500 fill-current"
+      />
+      <span className="text-sm font-semibold text-red-600">LIVE</span>
+    </div>
+  );
+}
+```
+
+### Connection Status
+
+```tsx
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function ConnectionStatus({ isOnline }) {
+  return (
+    <div className="flex items-center gap-2">
+      <MotionIcon
+        name="Wifi"
+        animation={isOnline ? "ping" : "none"}
+        size={16}
+        color={isOnline ? "#10b981" : "#ef4444"}
+      />
+      <span className={`text-sm font-medium ${
+        isOnline ? "text-green-600" : "text-red-600"
+      }`}>
+        {isOnline ? "Connected" : "Disconnected"}
+      </span>
+    </div>
+  );
+}
+```
+
+### Sync Status
+
+```tsx
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function SyncStatus({ isSyncing, lastSynced }) {
+  return (
+    <div className="flex items-center gap-2 text-sm text-gray-600">
+      <MotionIcon
+        name="RefreshCw"
+        animation={isSyncing ? "spin" : "none"}
+        size={14}
+        className={isSyncing ? "text-blue-500" : "text-gray-400"}
+      />
+      <span>
+        {isSyncing ? "Syncing..." : `Last synced ${lastSynced}`}
+      </span>
+    </div>
+  );
+}
+```
+
+## Notifications
+
+### Toast Notification
+
+```tsx
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function Toast({ type, message, onClose }) {
+  const config = {
+    success: {
+      icon: "CheckCircle",
+      color: "#10b981",
+      bg: "bg-green-50",
+      border: "border-green-200",
+      text: "text-green-800",
+    },
+    error: {
+      icon: "AlertCircle",
+      color: "#ef4444",
+      bg: "bg-red-50",
+      border: "border-red-200",
+      text: "text-red-800",
+    },
+    warning: {
+      icon: "AlertTriangle",
+      color: "#f59e0b",
+      bg: "bg-amber-50",
+      border: "border-amber-200",
+      text: "text-amber-800",
+    },
+  };
+
+  const { icon, color, bg, border, text } = config[type];
+
+  return (
+    <div className={`flex items-center gap-3 p-4 ${bg} border ${border} rounded-lg shadow-lg`}>
+      <MotionIcon
+        name={icon}
+        entrance="zoomIn"
+        animation={type === "error" ? "shake" : "tada"}
+        size={20}
+        color={color}
+      />
+      <span className={`flex-1 ${text} font-medium`}>{message}</span>
+      <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+        <MotionIcon name="X" size={16} />
+      </button>
+    </div>
+  );
+}
+
+// Usage
+<Toast type="success" message="Changes saved successfully!" onClose={() => {}} />
+<Toast type="error" message="Something went wrong" onClose={() => {}} />
+```
+
+### Notification Badge
+
+```tsx
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function NotificationBell({ count = 0 }) {
+  return (
+    <button className="relative p-2 hover:bg-gray-100 rounded-lg transition-colors">
+      <MotionIcon
+        name="Bell"
+        animation={count > 0 ? "wiggle" : "none"}
+        trigger="always"
+        size={20}
+        className="text-gray-600"
+      />
+      {count > 0 && (
+        <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full">
+          <MotionIcon
+            name="Circle"
+            animation="ping"
+            size={20}
+            className="absolute text-red-500"
+          />
+          {count}
+        </span>
+      )}
+    </button>
+  );
+}
+```
+
+## Loading States
+
+### Button Loading State
+
+```tsx
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function SubmitButton({ isLoading, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={isLoading}
+      className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+    >
+      {isLoading && (
+        <MotionIcon
+          name="Loader2"
+          animation="spin"
+          size={16}
+        />
+      )}
+      <span>{isLoading ? "Submitting..." : "Submit"}</span>
+    </button>
+  );
+}
+```
+
+### Skeleton Loader
+
+```tsx
+function SkeletonCard() {
+  return (
+    <div className="p-6 bg-white border rounded-lg">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+          <MotionIcon
+            name="User"
+            animation="pulse"
+            size={24}
+            className="text-gray-400"
+          />
+        </div>
+        <div className="flex-1 space-y-2">
+          <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+          <div className="h-3 bg-gray-200 rounded w-1/2 animate-pulse" />
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+## Form Elements
+
+### Search Input
+
+```tsx
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function SearchInput() {
+  const [query, setQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = async (value) => {
+    setQuery(value);
+    if (value.length > 2) {
+      setIsSearching(true);
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setIsSearching(false);
+    }
+  };
+
+  return (
+    <div className="relative">
+      <input
+        type="text"
+        placeholder="Search..."
+        value={query}
+        onChange={(e) => handleSearch(e.target.value)}
+        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      />
+      <div className="absolute left-3 top-1/2 -translate-y-1/2">
+        <MotionIcon
+          name={isSearching ? "Loader2" : "Search"}
+          animation={isSearching ? "spin" : "none"}
+          size={16}
+          className="text-gray-400"
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+### Password Visibility Toggle
+
+```tsx
+import { useState } from 'react';
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function PasswordInput() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [password, setPassword] = useState("");
+
+  return (
+    <div className="relative">
+      <input
+        type={isVisible ? "text" : "password"}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Enter password"
+        className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      />
+      <button
+        type="button"
+        onClick={() => setIsVisible(!isVisible)}
+        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+      >
+        <MotionIcon
+          name={isVisible ? "EyeOff" : "Eye"}
+          animation="flip"
+          trigger="always"
+          size={16}
+        />
+      </button>
+    </div>
+  );
+}
+```
+
+## Alerts
+
+### Dismissible Alert
+
+```tsx
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function Alert({ type, title, message, onDismiss }) {
+  const config = {
+    info: { icon: "Info", color: "#3b82f6", bg: "bg-blue-50", border: "border-blue-200" },
+    success: { icon: "CheckCircle", color: "#10b981", bg: "bg-green-50", border: "border-green-200" },
+    warning: { icon: "AlertTriangle", color: "#f59e0b", bg: "bg-amber-50", border: "border-amber-200" },
+    error: { icon: "XCircle", color: "#ef4444", bg: "bg-red-50", border: "border-red-200" },
+  };
+
+  const { icon, color, bg, border } = config[type];
+
+  return (
+    <div className={`flex gap-3 p-4 ${bg} border ${border} rounded-lg`}>
+      <MotionIcon
+        name={icon}
+        entrance="zoomIn"
+        animation={type === "error" ? "shake" : undefined}
+        size={20}
+        color={color}
+      />
+      <div className="flex-1">
+        <h4 className="font-semibold text-gray-900">{title}</h4>
+        <p className="text-sm text-gray-600 mt-1">{message}</p>
+      </div>
+      <button
+        onClick={onDismiss}
+        className="text-gray-400 hover:text-gray-600"
+      >
+        <MotionIcon name="X" size={16} />
+      </button>
+    </div>
+  );
+}
+```
+
+## Progress Indicators
+
+### Step Progress
+
+```tsx
+import { MotionIcon } from 'motion-icons-react';
+import 'motion-icons-react/style.css';
+
+function StepProgress({ steps, currentStep }) {
+  return (
+    <div className="flex items-center justify-between">
+      {steps.map((step, index) => {
+        const isCompleted = index < currentStep;
+        const isActive = index === currentStep;
+
+        return (
+          <div key={index} className="flex items-center">
+            <div className="flex flex-col items-center">
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${
+                  isCompleted
+                    ? "bg-blue-600 border-blue-600"
+                    : isActive
+                    ? "border-blue-600 bg-white"
+                    : "border-gray-300 bg-white"
+                }`}
+              >
+                {isCompleted ? (
+                  <MotionIcon
+                    name="Check"
+                    entrance="zoomIn"
+                    size={16}
+                    className="text-white"
+                  />
+                ) : (
+                  <span
+                    className={`text-sm font-semibold ${
+                      isActive ? "text-blue-600" : "text-gray-400"
+                    }`}
+                  >
+                    {index + 1}
+                  </span>
+                )}
+              </div>
+              <span className="mt-2 text-xs font-medium text-gray-600">
+                {step}
+              </span>
+            </div>
+            {index < steps.length - 1 && (
+              <div
+                className={`w-24 h-0.5 mx-2 ${
+                  isCompleted ? "bg-blue-600" : "bg-gray-300"
+                }`}
+              />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// Usage
+<StepProgress
+  steps={["Details", "Payment", "Confirm"]}
+  currentStep={1}
+/>
+```
+
+<Tip>
+All these recipes are production-ready. Copy, paste, and customize to match your design system!
+</Tip>

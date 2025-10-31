@@ -1,0 +1,333 @@
+---
+title: "Why Motion Icons?"
+description: "Why Motion Icons React vs framer-motion or custom CSS"
+---
+
+<style>
+{`
+/* Hide Mintlify branding */
+[class*="powered"],
+[class*="mintlify"],
+.footer-branding,
+.powered-by,
+a[href*="mintlify.com"],
+a[href*="mintlify"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Light theme - dark text on white background */
+body, p, span, div, h1, h2, h3, h4, h5, h6 {
+  color: #1E293B !important;
+  background-color: white !important;
+}
+
+/* Dark theme - white text on black background */
+.dark body, .dark p, .dark span, .dark div, 
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: white !important;
+  background-color: #000000 !important;
+}
+
+/* Blue hover states for both themes */
+a:hover {
+  color: #2563EB !important;
+}
+
+/* Links - dark in light mode, white in dark mode */
+a {
+  color: #475569 !important;
+}
+
+.dark a {
+  color: white !important;
+}
+`}
+</style>
+
+## The Problem with Current Solutions
+
+Animating icons in React today requires too much boilerplate and complexity.
+
+### With Framer Motion
+
+```tsx
+import { motion } from 'framer-motion';
+import { Bell } from 'lucide-react';
+
+function NotificationIcon() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0, rotate: 360 }}
+      transition={{ duration: 1, ease: "easeInOut" }}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <Bell size={24} />
+    </motion.div>
+  );
+}
+```
+
+**Problems:**
+- 🔴 Wrapper div required for every icon
+- 🔴 Need to remember animation curves
+- 🔴 Juggle initial/animate/transition props
+- 🔴 Manual hover/tap state handling
+- 🔴 Repetitive code for each icon
+- 🔴 Adds ~30KB to bundle
+
+### With Custom CSS
+
+```tsx
+import { Bell } from 'lucide-react';
+import './animations.css';
+
+function NotificationIcon() {
+  return (
+    <div className="icon-container">
+      <Bell size={24} className="animated-icon" />
+    </div>
+  );
+}
+```
+
+```css
+/* animations.css */
+@keyframes fadeInSpin {
+  from {
+    opacity: 0;
+    transform: translateY(20px) rotate(0deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(360deg);
+  }
+}
+
+.animated-icon {
+  animation: fadeInSpin 1s ease-in-out;
+}
+
+.icon-container:hover .animated-icon {
+  transform: scale(1.1);
+  transition: transform 0.2s;
+}
+```
+
+**Problems:**
+- 🔴 Separate CSS file to maintain
+- 🔴 Manual keyframe definitions
+- 🔴 No TypeScript support
+- 🔴 Hard to customize per instance
+- 🔴 Difficult to trigger programmatically
+
+## The Motion Icons Solution
+
+```tsx
+import { MotionIcon } from 'motion-icons-react';
+
+function NotificationIcon() {
+  return (
+    <MotionIcon
+      name="Bell"
+      animation="spin"
+      entrance="fadeInUp"
+      trigger="hover"
+      interactive
+    />
+  );
+}
+```
+
+**Benefits:**
+- ✅ One line, no wrappers
+- ✅ 15+ preset animations
+- ✅ Declarative API
+- ✅ Full TypeScript support
+- ✅ Interactive states built-in
+- ✅ Minimal bundle impact (~5KB)
+
+## Side-by-Side Comparison
+
+### Loading Spinner
+
+<CodeGroup>
+```tsx Framer Motion (12 lines)
+import { motion } from 'framer-motion';
+import { Loader2 } from 'lucide-react';
+
+function LoadingSpinner() {
+  return (
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{
+        duration: 1,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+    >
+      <Loader2 size={20} />
+    </motion.div>
+  );
+}
+```
+
+```tsx Motion Icons (1 line)
+<MotionIcon name="Loader2" animation="spin" size={20} />
+```
+</CodeGroup>
+
+### Interactive Heart Button
+
+<CodeGroup>
+```tsx Framer Motion (20 lines)
+import { motion } from 'framer-motion';
+import { Heart } from 'lucide-react';
+import { useState } from 'react';
+
+function LikeButton() {
+  const [isLiked, setIsLiked] = useState(false);
+  
+  return (
+    <motion.button
+      onClick={() => setIsLiked(!isLiked)}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <motion.div
+        animate={isLiked ? { scale: [1, 1.2, 1] } : {}}
+        transition={{ duration: 0.3 }}
+      >
+        <Heart size={24} fill={isLiked ? "red" : "none"} />
+      </motion.div>
+    </motion.button>
+  );
+}
+```
+
+```tsx Motion Icons (8 lines)
+import { useState } from 'react';
+
+function LikeButton() {
+  const [isLiked, setIsLiked] = useState(false);
+  
+  return (
+    <MotionIcon
+      name="Heart"
+      animation={isLiked ? "heartbeat" : "none"}
+      trigger="hover"
+      interactive
+      onClick={() => setIsLiked(!isLiked)}
+    />
+  );
+}
+```
+</CodeGroup>
+
+### Entrance Animation
+
+<CodeGroup>
+```tsx Framer Motion (10 lines)
+import { motion } from 'framer-motion';
+import { Star } from 'lucide-react';
+
+function StarIcon() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, type: "spring" }}
+    >
+      <Star size={32} />
+    </motion.div>
+  );
+}
+```
+
+```tsx Motion Icons (1 line)
+<MotionIcon name="Star" entrance="zoomIn" size={32} />
+```
+</CodeGroup>
+
+## When to Use What
+
+### Use Motion Icons React when:
+- ✅ You need animated icons quickly
+- ✅ You want preset, production-ready animations
+- ✅ You prefer declarative APIs
+- ✅ You want minimal bundle size
+- ✅ You need TypeScript support
+
+### Use Framer Motion when:
+- ✅ You need complex, custom animations
+- ✅ You're animating entire layouts
+- ✅ You need gesture controls (drag, pan, etc.)
+- ✅ You want physics-based animations
+- ✅ You're already using framer-motion
+
+### Use Custom CSS when:
+- ✅ You have very specific animation needs
+- ✅ You want zero JavaScript overhead
+- ✅ You're comfortable writing keyframes
+- ✅ You don't need dynamic control
+
+## Bundle Size Comparison
+
+| Library | Size (minified + gzipped) |
+|---------|---------------------------|
+| Motion Icons React | ~5KB |
+| Framer Motion | ~30KB |
+| Custom CSS | ~1KB (but more maintenance) |
+
+<Note>
+Motion Icons React is built on top of Lucide React, which you're likely already using. The additional cost is minimal.
+</Note>
+
+## Developer Experience
+
+### Motion Icons React
+```tsx
+// Autocomplete works perfectly
+<MotionIcon
+  name="Heart"        // ✅ Autocomplete all 3500+ icons
+  animation="pulse"   // ✅ Autocomplete all animations
+  trigger="hover"     // ✅ Autocomplete all triggers
+/>
+```
+
+### Framer Motion
+```tsx
+// No autocomplete for animation values
+<motion.div
+  animate={{ rotate: 360 }}  // ❌ No autocomplete
+  transition={{ ease: "easeInOut" }}  // ❌ Need to remember curves
+/>
+```
+
+## Real-World Usage
+
+Motion Icons React is perfect for:
+- 🎯 Loading indicators
+- 🎯 Button hover effects
+- 🎯 Notification badges
+- 🎯 Status indicators
+- 🎯 Navigation icons
+- 🎯 Form feedback
+- 🎯 Social reactions
+
+Framer Motion is better for:
+- 🎯 Page transitions
+- 🎯 Complex layout animations
+- 🎯 Drag and drop interfaces
+- 🎯 Gesture-based interactions
+- 🎯 Physics simulations
+
+## Conclusion
+
+Motion Icons React isn't trying to replace framer-motion. It's solving a specific problem: **making icon animations dead simple**.
+
+If you need complex animations, use framer-motion. If you just want your icons to look alive without the complexity, use Motion Icons React.
+
+**TL;DR:** Less code. Less complexity. Better DX.
