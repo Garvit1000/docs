@@ -7,6 +7,159 @@ All notable changes to Motion Icons React are documented on this page. We follow
 
 ---
 
+## [1.0.9] - November 2025
+
+### Critical Bug Fix: Entrance Animations
+
+This release fixes a critical issue where entrance animations were not working properly in the npm package despite functioning correctly in the website playground.
+
+### Problem Identified
+
+Entrance animations were either too fast, invisible, or not playing at all in applications using the npm package:
+- Animations appeared to skip or play too quickly
+- Icons were visible immediately instead of animating in
+- Animation timing didn't match the specified duration
+- The same code worked perfectly in the website playground
+
+### Root Cause
+
+Three separate issues were preventing entrance animations from working:
+
+1. **Timer Logic Error**: The `setHasEntered(true)` was being called after only `animationDelay` instead of `animationDuration + animationDelay`, causing the animation class to be removed prematurely
+2. **Missing Initial Opacity**: Elements weren't starting with `opacity: 0`, making them visible before the animation began
+3. **Conditional Animation Duration**: The `animationDuration` style was only applied conditionally, preventing proper override of CSS defaults
+
+### Changes Made
+
+#### 1. Fixed Timer Duration
+
+**Before:**
+```tsx
+useEffect(() => {
+  if (entrance) {
+    const timer = setTimeout(() => {
+      setHasEntered(true);
+    }, animationDelay);  // ❌ Only waits for delay!
+    return () => clearTimeout(timer);
+  }
+}, [entrance, animationDelay]);
+```
+
+**After:**
+```tsx
+useEffect(() => {
+  if (entrance) {
+    const timer = setTimeout(() => {
+      setHasEntered(true);
+    }, animationDuration + animationDelay);  // ✅ Waits for full animation
+    return () => clearTimeout(timer);
+  }
+}, [entrance, animationDuration, animationDelay]);
+```
+
+**Why this fixes it:** The entrance animation class needs to remain applied for the entire duration of the animation. Previously, it was removed after just the delay, cutting off the animation mid-play.
+
+#### 2. Added Initial Opacity for Entrance Animations
+
+**Before:**
+```tsx
+style={{
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color
+}}
+```
+
+**After:**
+```tsx
+style={{
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  animationDuration: `${animationDuration}ms`,
+  animationDelay: `${animationDelay}ms`,
+  ...(entrance && !hasEntered && { opacity: 0 }),  // ✅ Start invisible
+  color
+}}
+```
+
+**Why this fixes it:** Entrance animations need the element to start invisible (`opacity: 0`) before the animation begins. The CSS keyframes animate from `opacity: 0` to `opacity: 1`, but without the initial opacity, the element appears immediately.
+
+#### 3. Always Apply Animation Duration
+
+**Before:**
+```tsx
+style={{
+  ...(entrance && !hasEntered && { animationDuration: `${animationDuration}ms` }),
+  ...(animationDelay > 0 && { animationDelay: `${animationDelay}ms` }),
+}}
+```
+
+**After:**
+```tsx
+style={{
+  animationDuration: `${animationDuration}ms`,  // ✅ Always applied
+  animationDelay: `${animationDelay}ms`,        // ✅ Always applied
+  ...(entrance && !hasEntered && { opacity: 0 }),
+}}
+```
+
+**Why this fixes it:** The entrance animation CSS classes have hardcoded durations (0.8s-1s). By always applying the inline style, we ensure the user's custom `animationDuration` prop properly overrides these defaults.
+
+### Testing Results
+
+**Before v1.0.9:**
+- ❌ Entrance animations not visible or too fast
+- ❌ Icons appear immediately instead of animating
+- ❌ Custom timing not respected
+- ✅ Works in website playground
+
+**After v1.0.9:**
+- ✅ Entrance animations work properly
+- ✅ Icons start invisible and animate in
+- ✅ Custom duration and delay respected
+- ✅ Matches website playground behavior
+- ✅ Works in React, Next.js, and Vite
+
+### Migration Guide
+
+If you're upgrading from v1.0.8 or earlier:
+
+1. **Update the package:**
+   ```bash
+   npm install motion-icons-react@latest
+   ```
+
+2. **Clear build cache:**
+   ```bash
+   rm -rf node_modules/.cache
+   npm run dev
+   ```
+
+3. **Hard refresh browser:**
+   - Windows/Linux: Ctrl + Shift + R
+   - Mac: Cmd + Shift + R
+
+No code changes are required in your application. All entrance animations will now work as expected.
+
+### Example
+
+```tsx
+<MotionIcon
+  name="Heart"
+  entrance="fadeInUp"        // Now works correctly!
+  animationDuration={1000}   // Duration is respected
+  animationDelay={200}       // Delay works properly
+/>
+```
+
+### Files Changed
+
+- `npm-motion-icons/src/components/MotionIcon.tsx` - Fixed entrance animation logic
+
+---
+
 ## [1.0.3] - October 2025
 
 ### Critical Bug Fix: Next.js Animation Support
